@@ -1,0 +1,276 @@
+---
+const BMC_URL = "https://buymeacoffee.com/thesignalnews";
+---
+
+<section id="support" class="support">
+  <div class="container">
+    <div class="support-card">
+      <div class="support-text">
+        <div class="eyebrow">Support</div>
+        <h2>mMDd is free.<br />Forever.</h2>
+        <p class="lede">
+          No subscription. No tracking. No upsell pop-ups.
+          If mMDd makes your writing day a little nicer and you'd like to say
+          thanks, supporters get a code that unlocks five extra themes and six
+          extra fonts — a small token of gratitude, not a paywall.
+        </p>
+
+        <div class="support-actions">
+          <a
+            class="btn btn-coffee"
+            href={BMC_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                d="M18 8h1a3 3 0 0 1 0 6h-1.18A6 6 0 0 1 12 19a6 6 0 0 1-5.82-5H4V5h14v3zm0 2v2h1a1 1 0 0 0 0-2h-1zM2 21h18v2H2v-2z"
+              ></path>
+            </svg>
+            Buy me a coffee
+          </a>
+          <a class="btn btn-ghost" href="#download">How to redeem a code →</a>
+        </div>
+
+        <div class="support-steps" id="download">
+          <h3 class="steps-h">Got a thank-you code?</h3>
+          <ol class="steps-list">
+            <li>
+              Open mMDd, click the <span class="kbd">⚙</span> gear icon next
+              to the <span class="kbd">+</span>.
+            </li>
+            <li>
+              Scroll to <em>Unlock</em> and paste your code.
+            </li>
+            <li>
+              Five Supporter themes and six Supporter fonts appear instantly.
+              That's it.
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <aside class="support-side" aria-hidden="true">
+        <div class="coffee-cup">
+          <div class="coffee-steam">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="coffee-mug">
+            <div class="coffee-handle"></div>
+            <div class="coffee-fill"></div>
+          </div>
+          <div class="coffee-saucer"></div>
+        </div>
+        <p class="support-tagline">
+          "Pour one out for indie software."
+        </p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<style>
+  .support-card {
+    background: var(--panel-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: clamp(32px, 5vw, 56px);
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: 40px;
+    align-items: center;
+    box-shadow: 0 18px 40px -22px var(--panel-shadow);
+  }
+
+  .support-text h2 {
+    margin: 12px 0 22px;
+  }
+
+  .support-actions {
+    margin-top: 28px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .btn-coffee {
+    background: #ffdd00;
+    color: #0a0a0a;
+    box-shadow: 0 2px 0 #c9ad00, 0 8px 16px -8px rgba(255, 221, 0, 0.6);
+  }
+
+  .btn-coffee:hover {
+    text-decoration: none;
+    background: #ffe23f;
+  }
+
+  .support-steps {
+    margin-top: 36px;
+    padding-top: 28px;
+    border-top: 1px solid var(--hr);
+  }
+
+  .steps-h {
+    font-family: var(--ui-font);
+    font-size: 13px;
+    color: var(--fg-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 14px;
+    font-weight: 600;
+  }
+
+  .steps-list {
+    color: var(--fg-soft);
+    font-size: 15px;
+    line-height: 1.7;
+    padding-left: 22px;
+    margin: 0;
+  }
+
+  .steps-list em {
+    color: var(--fg);
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  .kbd {
+    display: inline-block;
+    background: var(--chip-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: 12px;
+    color: var(--fg);
+  }
+
+  /* ---------- Coffee illustration ---------- */
+
+  .support-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    padding: 20px;
+  }
+
+  .coffee-cup {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .coffee-steam {
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+  }
+
+  .coffee-steam span {
+    display: block;
+    width: 5px;
+    height: 26px;
+    background: linear-gradient(
+      to top,
+      color-mix(in srgb, var(--fg-soft) 50%, transparent),
+      transparent
+    );
+    border-radius: 999px;
+    animation: steam 2.4s ease-in-out infinite;
+  }
+
+  .coffee-steam span:nth-child(2) {
+    animation-delay: 0.4s;
+    height: 32px;
+  }
+
+  .coffee-steam span:nth-child(3) {
+    animation-delay: 0.8s;
+  }
+
+  @keyframes steam {
+    0% {
+      opacity: 0;
+      transform: translateY(8px) scale(0.9);
+    }
+    35% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-18px) scale(1.05);
+    }
+  }
+
+  .coffee-mug {
+    position: relative;
+    width: 120px;
+    height: 100px;
+    background: var(--accent);
+    border-radius: 8px 8px 28px 28px;
+    box-shadow: inset 0 -8px 0 rgba(0, 0, 0, 0.12);
+  }
+
+  .coffee-handle {
+    position: absolute;
+    right: -22px;
+    top: 18px;
+    width: 26px;
+    height: 50px;
+    border: 7px solid var(--accent);
+    border-left: none;
+    border-radius: 0 999px 999px 0;
+  }
+
+  .coffee-fill {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    height: 18px;
+    background: #3a2614;
+    border-radius: 4px 4px 0 0;
+    box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .coffee-saucer {
+    width: 160px;
+    height: 12px;
+    background: color-mix(in srgb, var(--accent) 70%, #000);
+    border-radius: 0 0 40px 40px;
+    margin-top: -2px;
+  }
+
+  .support-tagline {
+    font-family: var(--body-font);
+    font-style: italic;
+    color: var(--fg-soft);
+    text-align: center;
+    font-size: 15px;
+    max-width: 220px;
+  }
+
+  @media (max-width: 920px) {
+    .support-card {
+      grid-template-columns: 1fr;
+    }
+
+    .support-side {
+      order: -1;
+    }
+  }
+</style>

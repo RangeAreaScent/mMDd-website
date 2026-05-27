@@ -1,0 +1,411 @@
+---
+import Logo from "./Logo.astro";
+---
+
+<section id="top" class="hero">
+  <div class="container hero-inner">
+    <div class="hero-text">
+      <div class="hero-mark">
+        <Logo size={64} />
+      </div>
+      <h1>
+        Clean. Light. <em>Free.</em><br />
+        A Markdown editor.
+      </h1>
+      <p class="lede">
+        mMDd is a minimal Markdown editor for macOS and Windows.
+        Newsprint paper warmth, vintage red accent, no clutter — just you and
+        the words.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#download" aria-disabled="true">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.572-2.27 1.206-2.98.804-.94 2.142-1.64 3.248-1.68.03.13.05.28.05.43zm4.565 15.71c-.03.07-.463 1.58-1.518 3.12-.945 1.34-1.94 2.71-3.43 2.71-1.517 0-1.9-.88-3.63-.88-1.698 0-2.302.91-3.67.91-1.377 0-2.332-1.26-3.428-2.79-1.287-1.82-2.323-4.63-2.323-7.28 0-4.28 2.797-6.55 5.552-6.55 1.448 0 2.675.95 3.6.95.865 0 2.222-1.01 3.902-1.01.613 0 2.886.06 4.374 2.19-.13.09-2.383 1.37-2.383 4.19 0 3.26 2.854 4.42 2.955 4.44z"
+            ></path>
+          </svg>
+          Download for Mac
+        </a>
+        <a class="btn btn-secondary" href="#download" aria-disabled="true">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              d="M3 5.48L10.5 4.5v7H3V5.48zm0 13.04l7.5.98v-7H3v6.02zm8.5-7v7.13l9.5 1.34V11.52H11.5zm0-7.13v7.13H21V3.05L11.5 4.39z"
+            ></path>
+          </svg>
+          Download for Windows
+        </a>
+      </div>
+      <p class="hero-note">
+        Releases coming soon · Free forever · Open Markdown.
+      </p>
+    </div>
+
+    <div class="hero-art" aria-hidden="true">
+      <div class="window">
+        <div class="window-chrome">
+          <span class="dot dot-r"></span>
+          <span class="dot dot-y"></span>
+          <span class="dot dot-g"></span>
+          <div class="tabs">
+            <div class="tab tab-active">essay.md</div>
+            <div class="tab">notes.md</div>
+            <div class="tab">+</div>
+          </div>
+        </div>
+        <div class="window-body">
+          <div class="pane pane-editor">
+            <pre>
+# On Writing
+
+A clean room and an empty page.
+That's all you need to begin.
+
+- Pour the coffee.
+- Open the file.
+- **Stop deciding.** Start typing.
+
+> The first draft is permission
+> to write a second.
+
+```js
+const ideas = capture(thoughts)
+  .filter(Boolean)
+  .map(refine);
+```</pre>
+          </div>
+          <div class="divider"></div>
+          <div class="pane pane-preview">
+            <h2 class="preview-h1">On Writing</h2>
+            <p class="preview-p">
+              A clean room and an empty page. That's all you need to begin.
+            </p>
+            <ul class="preview-list">
+              <li>Pour the coffee.</li>
+              <li>Open the file.</li>
+              <li><strong>Stop deciding.</strong> Start typing.</li>
+            </ul>
+            <blockquote class="preview-quote">
+              The first draft is permission to write a second.
+            </blockquote>
+            <pre class="preview-code"><span class="hl-k">const</span> <span
+                class="hl-t">ideas</span> = <span class="hl-fn">capture</span>(thoughts)
+  .<span class="hl-fn">filter</span>(<span class="hl-b">Boolean</span>)
+  .<span class="hl-fn">map</span>(refine);</pre>
+          </div>
+        </div>
+        <div class="window-status">
+          <span>● essay.md</span>
+          <span class="status-sep"></span>
+          <span>342 words · 2 min read</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-top: clamp(40px, 7vw, 80px);
+    padding-bottom: clamp(60px, 10vw, 120px);
+    border-bottom: 1px solid var(--hr);
+  }
+
+  .hero-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    align-items: center;
+    gap: clamp(28px, 5vw, 64px);
+  }
+
+  .hero-mark {
+    margin-bottom: 24px;
+  }
+
+  h1 em {
+    color: var(--accent);
+    font-style: italic;
+    font-weight: 700;
+  }
+
+  .hero-text .lede {
+    margin-top: 24px;
+  }
+
+  .hero-actions {
+    margin-top: 32px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .hero-note {
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--fg-soft);
+  }
+
+  /* ---------- Window mock ---------- */
+
+  .hero-art {
+    perspective: 1400px;
+  }
+
+  .window {
+    background: #f7f7f4;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.4) inset,
+      0 30px 60px -20px rgba(0, 0, 0, 0.25),
+      0 12px 30px -12px rgba(176, 58, 46, 0.18),
+      0 0 0 1px rgba(0, 0, 0, 0.06);
+    transform: rotateY(-2deg) rotateX(2deg);
+    color: #2b2b2b;
+    font-family: var(--ui-font);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  :global(html[data-theme="dark"]) .window {
+    background: #1c1a17;
+    color: #e8e3d6;
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.04) inset,
+      0 30px 60px -20px rgba(0, 0, 0, 0.6),
+      0 12px 30px -12px rgba(210, 135, 109, 0.2),
+      0 0 0 1px rgba(255, 255, 255, 0.06);
+  }
+
+  .window-chrome {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px 0;
+    background: transparent;
+  }
+
+  .dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .dot-r {
+    background: #ff5f57;
+  }
+  .dot-y {
+    background: #febc2e;
+  }
+  .dot-g {
+    background: #28c840;
+  }
+
+  .tabs {
+    margin-left: 28px;
+    display: flex;
+    gap: 4px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .tab {
+    padding: 6px 14px 8px;
+    background: #ededea;
+    color: #6b6b6b;
+    border-radius: 6px 6px 0 0;
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .tab-active {
+    background: #f7f7f4;
+    color: #2b2b2b;
+    box-shadow: 0 -1px 0 #d3d3cc inset;
+  }
+
+  :global(html[data-theme="dark"]) .tab {
+    background: #2e2a26;
+    color: #a09b8e;
+  }
+
+  :global(html[data-theme="dark"]) .tab-active {
+    background: #1c1a17;
+    color: #e8e3d6;
+    box-shadow: 0 -1px 0 #2e2a26 inset;
+  }
+
+  .window-body {
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+    min-height: 360px;
+  }
+
+  .pane {
+    padding: 22px 22px;
+    overflow: hidden;
+  }
+
+  .pane-editor pre {
+    font-family: "iA Writer Quattro V", ui-monospace, "SF Mono", Menlo,
+      monospace;
+    font-size: 12.5px;
+    color: #2b2b2b;
+    margin: 0;
+    white-space: pre-wrap;
+    line-height: 1.55;
+  }
+
+  :global(html[data-theme="dark"]) .pane-editor pre {
+    color: #e8e3d6;
+  }
+
+  .divider {
+    background: #e0e0da;
+  }
+
+  :global(html[data-theme="dark"]) .divider {
+    background: #2e2a26;
+  }
+
+  .pane-preview {
+    background: transparent;
+    font-family: "New York", "Iowan Old Style", Georgia, serif;
+    color: #2b2b2b;
+  }
+
+  :global(html[data-theme="dark"]) .pane-preview {
+    color: #e8e3d6;
+  }
+
+  .preview-h1 {
+    font-family: "New York", "Iowan Old Style", Georgia, serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #d3d3cc;
+    color: inherit;
+  }
+
+  :global(html[data-theme="dark"]) .preview-h1 {
+    border-color: #2e2a26;
+  }
+
+  .preview-p {
+    font-size: 13px;
+    margin: 0 0 12px;
+    line-height: 1.6;
+  }
+
+  .preview-list {
+    font-size: 13px;
+    margin: 0 0 12px;
+    padding-left: 18px;
+    line-height: 1.7;
+  }
+
+  .preview-quote {
+    margin: 0 0 12px;
+    padding: 4px 0 4px 14px;
+    border-left: 3px solid #b03a2e;
+    color: #6b6b6b;
+    font-style: italic;
+    font-size: 13px;
+  }
+
+  :global(html[data-theme="dark"]) .preview-quote {
+    border-color: #d2876d;
+    color: #a09b8e;
+  }
+
+  .preview-code {
+    background: #ededea;
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin: 0;
+    font-family: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 11.5px;
+    line-height: 1.55;
+    color: #2b2b2b;
+  }
+
+  :global(html[data-theme="dark"]) .preview-code {
+    background: #26221e;
+    color: #e8e3d6;
+  }
+
+  .hl-k {
+    color: #b03a2e;
+    font-weight: 600;
+  }
+  .hl-t {
+    color: #6f42c1;
+  }
+  .hl-fn {
+    color: #6f42c1;
+  }
+  .hl-b {
+    color: #e36209;
+  }
+
+  :global(html[data-theme="dark"]) .hl-k {
+    color: #d2876d;
+  }
+  :global(html[data-theme="dark"]) .hl-t,
+  :global(html[data-theme="dark"]) .hl-fn {
+    color: #82aaff;
+  }
+  :global(html[data-theme="dark"]) .hl-b {
+    color: #ffb86c;
+  }
+
+  .window-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+    border-top: 1px solid #d3d3cc;
+    font-size: 11px;
+    color: #6b6b6b;
+  }
+
+  :global(html[data-theme="dark"]) .window-status {
+    border-color: #2e2a26;
+    color: #a09b8e;
+  }
+
+  .status-sep {
+    flex: 1;
+  }
+
+  @media (max-width: 920px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+    }
+    .window {
+      transform: none;
+    }
+    .window-body {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1px auto;
+    }
+    .divider {
+      width: 100%;
+      height: 1px;
+    }
+  }
+</style>

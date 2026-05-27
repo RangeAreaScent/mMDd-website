@@ -1,0 +1,139 @@
+---
+const features = [
+  {
+    title: "Three view modes, one shortcut",
+    body:
+      "Preview, Split, Editor-only — cycle through them with ⌘E. The icon in the tab bar tells you which mode you're in.",
+    chip: "⌘E",
+  },
+  {
+    title: "Tabs that stay out of your way",
+    body:
+      "Scroll, drag to reorder, middle-click to close. Right-click for Reveal in Finder, Copy Path, Close Others. Ctrl+Tab to cycle.",
+    chip: "Tabs",
+  },
+  {
+    title: "Outline sidebar",
+    body:
+      "Toggle with ⌘⇧O. Walks every heading in the document — click to jump. Built lazily, so it never slows you down.",
+    chip: "⌘⇧O",
+  },
+  {
+    title: "Find. Replace. Repeat.",
+    body:
+      "⌘F to find, ⌘⌥F to replace. Match count, next/prev, regex on the editor side. Undo works exactly as you'd expect.",
+    chip: "⌘F / ⌘⌥F",
+  },
+  {
+    title: "Task lists you can actually check",
+    body:
+      "Click a checkbox in the preview. mMDd toggles [ ] ↔ [x] in your source and marks the tab dirty so you don't lose the change.",
+    chip: "Live",
+  },
+  {
+    title: "Focus mode",
+    body:
+      "⌘. hides every chrome element. Just paper. The status bar comes back when you move the mouse.",
+    chip: "⌘.",
+  },
+  {
+    title: "Image zoom, PDF export",
+    body:
+      "Double-click an image for a full-screen overlay. ⌘⇧E exports a clean PDF that matches your current theme.",
+    chip: "Print-ready",
+  },
+  {
+    title: "Auto-save & atomic writes",
+    body:
+      "Opt into 30-second auto-save. Every save is atomic — a temp file plus a rename, so a power cut never corrupts your draft.",
+    chip: "Safe",
+  },
+  {
+    title: "Front matter handled",
+    body:
+      "YAML and TOML front matter is stripped before rendering. Relative .md links open as new tabs. Images resolve from your file's folder.",
+    chip: "Markdown-aware",
+  },
+];
+---
+
+<section id="features" class="features">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Features</div>
+      <h2>Everything you need.<br />Nothing you don't.</h2>
+      <p class="lede">
+        No live preview hacks. No WYSIWYG bugs. No bloat. Just a clean
+        Markdown editor that respects your file and your focus.
+      </p>
+    </div>
+
+    <div class="feature-grid">
+      {features.map((f) => (
+        <article class="feature-card">
+          <span class="badge-soft chip">{f.chip}</span>
+          <h3>{f.title}</h3>
+          <p>{f.body}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-head {
+    margin-bottom: clamp(40px, 6vw, 64px);
+  }
+
+  .section-head h2 {
+    margin-bottom: 18px;
+  }
+
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .feature-card {
+    background: var(--panel-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 26px 24px;
+    transition: transform 0.15s ease, border-color 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+    box-shadow: 0 12px 28px -16px var(--panel-shadow);
+  }
+
+  .chip {
+    font-family: var(--ui-font);
+  }
+
+  .feature-card h3 {
+    margin: 14px 0 8px;
+    color: var(--fg);
+  }
+
+  .feature-card p {
+    color: var(--fg-soft);
+    font-size: 14.5px;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 920px) {
+    .feature-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 580px) {
+    .feature-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

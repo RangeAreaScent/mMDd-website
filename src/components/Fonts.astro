@@ -1,0 +1,154 @@
+---
+// Fonts mirror the app's font catalog. Sample text is rendered in each font.
+// iA Writer Quattro is not on Google Fonts — we approximate with Inter so the
+// site still loads cleanly. The other 8 are pulled from Google Fonts.
+
+const fonts = [
+  {
+    id: "ia-quattro",
+    label: "iA Writer Quattro",
+    pro: false,
+    stack: '"iA Writer Quattro V", Inter, system-ui, sans-serif',
+    note: "Default",
+  },
+  {
+    id: "new-york",
+    label: "New York",
+    pro: false,
+    stack: '"New York", "Iowan Old Style", Georgia, serif',
+  },
+  {
+    id: "merriweather",
+    label: "Merriweather",
+    pro: true,
+    stack: '"Merriweather", Georgia, serif',
+  },
+  {
+    id: "noto-serif",
+    label: "Noto Serif",
+    pro: true,
+    stack: '"Noto Serif", Georgia, serif',
+  },
+  {
+    id: "inter",
+    label: "Inter",
+    pro: true,
+    stack: '"Inter", system-ui, sans-serif',
+  },
+  {
+    id: "jetbrains",
+    label: "JetBrains Mono",
+    pro: true,
+    stack: '"JetBrains Mono", ui-monospace, monospace',
+  },
+  {
+    id: "nanum",
+    label: "Nanum Gothic Coding",
+    pro: true,
+    stack: '"Nanum Gothic Coding", ui-monospace, monospace',
+  },
+  {
+    id: "vt323",
+    label: "VT323",
+    pro: true,
+    stack: '"VT323", "Courier New", monospace',
+    note: "Paired with Matrix",
+  },
+];
+
+const sample =
+  "The quiet morning light fell across the page. Five lines in, the words found their rhythm.";
+---
+
+<section id="fonts" class="fonts">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Typography</div>
+      <h2>Fonts that travel<br />with the app.</h2>
+      <p class="lede">
+        Every font ships inside mMDd, so a Mac and a Windows machine render
+        the same letterforms. Two are free, six are a thank-you for
+        supporters. Each theme remembers its own font.
+      </p>
+    </div>
+
+    <div class="font-grid">
+      {fonts.map((f) => (
+        <article class="font-card">
+          <div class="font-head">
+            <div class="font-label">
+              {f.label}
+              {f.note && <span class="font-note">{f.note}</span>}
+            </div>
+            {f.pro ? (
+              <span class="badge">Supporter</span>
+            ) : (
+              <span class="badge-soft">Free</span>
+            )}
+          </div>
+          <p class="font-sample" style={`font-family:${f.stack};`}>
+            {sample}
+          </p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .font-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .font-card {
+    background: var(--panel-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+
+  .font-card:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+  }
+
+  .font-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .font-label {
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--fg-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .font-note {
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    text-transform: none;
+  }
+
+  .font-sample {
+    font-size: 19px;
+    line-height: 1.5;
+    color: var(--fg);
+  }
+
+  @media (max-width: 720px) {
+    .font-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

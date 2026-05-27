@@ -1,0 +1,191 @@
+---
+import Logo from "./Logo.astro";
+---
+
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="#top" class="nav-brand" aria-label="mMDd home">
+      <Logo size={32} />
+      <span class="nav-brand-text">mMDd</span>
+    </a>
+
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#themes">Themes</a>
+      <a href="#fonts">Fonts</a>
+      <a href="#support">Support</a>
+    </div>
+
+    <div class="nav-actions">
+      <a
+        class="btn btn-ghost"
+        href="https://github.com/RangeAreaScent/mMDd-website"
+        aria-label="GitHub"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2.16c-3.19.69-3.86-1.36-3.86-1.36-.53-1.34-1.29-1.7-1.29-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.72 1.27 3.38.97.1-.75.41-1.27.74-1.56-2.55-.29-5.23-1.27-5.23-5.66 0-1.25.45-2.27 1.18-3.07-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.18 1.17.92-.26 1.91-.39 2.89-.39s1.97.13 2.89.39c2.21-1.48 3.18-1.17 3.18-1.17.62 1.58.23 2.75.11 3.04.74.8 1.18 1.82 1.18 3.07 0 4.4-2.69 5.37-5.25 5.65.42.36.79 1.07.79 2.17v3.21c0 .31.21.68.8.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"
+          ></path>
+        </svg>
+      </a>
+      <button
+        class="theme-toggle"
+        aria-label="Toggle dark mode"
+        data-theme-toggle
+      >
+        <svg
+          class="icon-sun"
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="4"></circle>
+          <path
+            d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+          ></path>
+        </svg>
+        <svg
+          class="icon-moon"
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--bg);
+    border-bottom: 1px solid var(--hr);
+  }
+
+  @supports (backdrop-filter: blur(0)) {
+    .nav {
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: saturate(180%) blur(12px);
+      -webkit-backdrop-filter: saturate(180%) blur(12px);
+    }
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    height: 64px;
+  }
+
+  .nav-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--fg);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .nav-brand:hover {
+    text-decoration: none;
+  }
+
+  .nav-brand-text {
+    font-family: var(--body-font);
+    font-size: 18px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 22px;
+  }
+
+  .nav-links a {
+    color: var(--fg-soft);
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .nav-links a:hover {
+    color: var(--fg);
+    text-decoration: none;
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    color: var(--fg-soft);
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+
+  .theme-toggle:hover {
+    background: var(--chip-bg);
+    color: var(--fg);
+  }
+
+  .icon-moon {
+    display: none;
+  }
+
+  :global(html[data-theme="dark"]) .icon-sun {
+    display: none;
+  }
+
+  :global(html[data-theme="dark"]) .icon-moon {
+    display: block;
+  }
+
+  @media (max-width: 720px) {
+    .nav-links {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const root = document.documentElement;
+  const btn = document.querySelector("[data-theme-toggle]");
+  btn?.addEventListener("click", () => {
+    const current = root.getAttribute("data-theme") || "newsprint";
+    const next = current === "dark" ? "newsprint" : "dark";
+    root.setAttribute("data-theme", next);
+    try {
+      localStorage.setItem("mmdd-site-theme", next);
+    } catch (e) {}
+  });
+</script>

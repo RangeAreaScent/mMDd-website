@@ -1,0 +1,302 @@
+---
+// Theme palettes mirror the app's themes.css so the preview cards are
+// pixel-accurate. Pro themes get a star badge.
+
+const themes = [
+  {
+    id: "mmdd",
+    label: "mMDd",
+    pro: false,
+    dark: false,
+    bg: "#ffffff",
+    fg: "#2c2c2e",
+    fgSoft: "#6e6e73",
+    accent: "#4c6ef5",
+    border: "#e9e9ec",
+    codeBg: "#f6f6f7",
+  },
+  {
+    id: "mmdd-dark",
+    label: "mMDd dark",
+    pro: false,
+    dark: true,
+    bg: "#1c1c22",
+    fg: "#d4d4d8",
+    fgSoft: "#8a8a93",
+    accent: "#7c9cf5",
+    border: "#2e2e36",
+    codeBg: "#26262e",
+  },
+  {
+    id: "newsprint",
+    label: "Newsprint",
+    pro: false,
+    dark: false,
+    bg: "#f7f7f4",
+    fg: "#2b2b2b",
+    fgSoft: "#6b6b6b",
+    accent: "#b03a2e",
+    border: "#e0e0da",
+    codeBg: "#ededea",
+    note: "Default",
+  },
+  {
+    id: "newsprint-dark",
+    label: "Newsprint dark",
+    pro: false,
+    dark: true,
+    bg: "#1c1a17",
+    fg: "#e8e3d6",
+    fgSoft: "#a09b8e",
+    accent: "#d2876d",
+    border: "#2e2a26",
+    codeBg: "#26221e",
+  },
+  {
+    id: "solarized",
+    label: "Solarized",
+    pro: true,
+    dark: false,
+    bg: "#fdf6e3",
+    fg: "#586e75",
+    fgSoft: "#93a1a1",
+    accent: "#268bd2",
+    border: "#eee8d5",
+    codeBg: "#eee8d5",
+  },
+  {
+    id: "night-owl",
+    label: "Night Owl",
+    pro: true,
+    dark: true,
+    bg: "#011627",
+    fg: "#d6deeb",
+    fgSoft: "#5f7e97",
+    accent: "#82aaff",
+    border: "#122d42",
+    codeBg: "#0b2942",
+  },
+  {
+    id: "forest",
+    label: "Forest",
+    pro: true,
+    dark: true,
+    bg: "#1b2420",
+    fg: "#cdd6cf",
+    fgSoft: "#7c8a80",
+    accent: "#87c38f",
+    border: "#2b3a32",
+    codeBg: "#22302a",
+  },
+  {
+    id: "coder",
+    label: "Coder",
+    pro: true,
+    dark: true,
+    bg: "#0c0f0d",
+    fg: "#b8c2b9",
+    fgSoft: "#6e7c70",
+    accent: "#00ff88",
+    border: "#1a1f1c",
+    codeBg: "#131816",
+  },
+  {
+    id: "matrix",
+    label: "Matrix",
+    pro: true,
+    dark: true,
+    bg: "#000000",
+    fg: "#6ee06e",
+    fgSoft: "#2e6b2e",
+    accent: "#6ee06e",
+    border: "#143014",
+    codeBg: "#060c06",
+  },
+];
+---
+
+<section id="themes" class="themes">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Themes</div>
+      <h2>Nine themes.<br />One feels like home.</h2>
+      <p class="lede">
+        Four themes are free and ship with every install. Five more come as a
+        small thank-you for supporters — including the iconic Newsprint, our
+        default, with its warm paper and vintage red.
+      </p>
+    </div>
+
+    <div class="theme-grid">
+      {themes.map((t) => (
+        <article
+          class={`theme-card ${t.dark ? "is-dark" : "is-light"}`}
+          style={`--t-bg:${t.bg};--t-fg:${t.fg};--t-fg-soft:${t.fgSoft};--t-accent:${t.accent};--t-border:${t.border};--t-code:${t.codeBg};`}
+        >
+          <div class="theme-preview">
+            <div class="tp-titlebar">
+              <span class="tp-dot" style="background:#ff5f57"></span>
+              <span class="tp-dot" style="background:#febc2e"></span>
+              <span class="tp-dot" style="background:#28c840"></span>
+            </div>
+            <div class="tp-body">
+              <div class="tp-h">A Few Lines</div>
+              <div class="tp-line"></div>
+              <div class="tp-line tp-line-short"></div>
+              <div class="tp-quote">"a quiet line."</div>
+              <div class="tp-code">
+                <span class="tp-tok-k">const</span>
+                <span class="tp-tok-i"> idea</span>
+                <span> = "spark";</span>
+              </div>
+            </div>
+          </div>
+          <div class="theme-meta">
+            <div class="theme-name">
+              {t.label}
+              {t.note && <span class="theme-note">{t.note}</span>}
+            </div>
+            {t.pro ? (
+              <span class="badge">Supporter</span>
+            ) : (
+              <span class="badge-soft">Free</span>
+            )}
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .theme-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .theme-card {
+    background: var(--panel-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .theme-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 30px -18px var(--panel-shadow);
+  }
+
+  .theme-preview {
+    background: var(--t-bg);
+    color: var(--t-fg);
+    padding: 12px 16px 18px;
+    border-bottom: 1px solid var(--border);
+    aspect-ratio: 16 / 10;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tp-titlebar {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 14px;
+  }
+
+  .tp-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .tp-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-family: var(--body-font);
+  }
+
+  .tp-h {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--t-fg);
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--t-border);
+  }
+
+  .tp-line {
+    height: 6px;
+    border-radius: 3px;
+    background: var(--t-fg-soft);
+    opacity: 0.35;
+  }
+
+  .tp-line-short {
+    width: 60%;
+  }
+
+  .tp-quote {
+    font-style: italic;
+    font-size: 11px;
+    color: var(--t-fg-soft);
+    border-left: 2px solid var(--t-accent);
+    padding-left: 8px;
+    line-height: 1.4;
+  }
+
+  .tp-code {
+    background: var(--t-code);
+    padding: 6px 8px;
+    border-radius: 4px;
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 10.5px;
+    color: var(--t-fg);
+    margin-top: auto;
+  }
+
+  .tp-tok-k {
+    color: var(--t-accent);
+  }
+
+  .tp-tok-i {
+    color: var(--t-fg);
+    opacity: 0.85;
+  }
+
+  .theme-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+  }
+
+  .theme-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--fg);
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .theme-note {
+    font-size: 11px;
+    color: var(--fg-soft);
+    font-weight: 500;
+  }
+
+  @media (max-width: 920px) {
+    .theme-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 580px) {
+    .theme-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

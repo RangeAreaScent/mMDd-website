@@ -1,0 +1,240 @@
+/* mMDd website — global styles.
+   Theme variables mirror the app's themes.css so the site shows real product colors. */
+
+:root {
+  --bg: #f7f7f4;
+  --fg: #2b2b2b;
+  --fg-soft: #6b6b6b;
+  --accent: #b03a2e;
+  --border: #e0e0da;
+  --code-bg: #ededea;
+  --code-fg: #2b2b2b;
+  --quote-fg: #6b6b6b;
+  --link: #b03a2e;
+  --selection: rgba(176, 58, 46, 0.16);
+  --panel-bg: #f7f7f4;
+  --panel-shadow: rgba(0, 0, 0, 0.18);
+  --chip-bg: #ededea;
+  --hr: #d3d3cc;
+
+  --ui-font: "iA Writer Quattro V", "iA Writer Quattro S", -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --body-font: "New York", "Iowan Old Style", "Palatino Linotype",
+    "Book Antiqua", Georgia, Cambria, serif;
+
+  --maxw: 1100px;
+  --pad: clamp(20px, 4vw, 48px);
+  --radius: 14px;
+  --radius-sm: 8px;
+}
+
+html[data-theme="dark"] {
+  --bg: #1c1a17;
+  --fg: #e8e3d6;
+  --fg-soft: #a09b8e;
+  --accent: #d2876d;
+  --border: #2e2a26;
+  --code-bg: #26221e;
+  --code-fg: #e8e3d6;
+  --quote-fg: #a09b8e;
+  --link: #d2876d;
+  --selection: rgba(210, 135, 109, 0.22);
+  --panel-bg: #26221e;
+  --panel-shadow: rgba(0, 0, 0, 0.6);
+  --chip-bg: #2e2a26;
+  --hr: #2e2a26;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--ui-font);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+::selection {
+  background: var(--selection);
+}
+
+a {
+  color: var(--link);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--body-font);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(40px, 6vw, 64px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: clamp(28px, 3.5vw, 40px);
+  line-height: 1.15;
+}
+
+h3 {
+  font-size: 20px;
+  line-height: 1.3;
+}
+
+p {
+  margin: 0;
+}
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--pad);
+}
+
+section {
+  padding: clamp(60px, 9vw, 110px) 0;
+  border-bottom: 1px solid var(--hr);
+}
+
+section:last-of-type {
+  border-bottom: none;
+}
+
+.eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.lede {
+  font-family: var(--body-font);
+  font-size: clamp(18px, 2vw, 22px);
+  line-height: 1.5;
+  color: var(--fg-soft);
+  max-width: 640px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 15px;
+  transition: transform 0.1s ease, opacity 0.15s ease,
+    background-color 0.15s ease, border-color 0.15s ease;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.btn:hover {
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+html[data-theme="dark"] .btn-primary {
+  color: #1c1a17;
+}
+
+.btn-secondary {
+  background: var(--chip-bg);
+  color: var(--fg);
+  border-color: var(--border);
+}
+
+.btn-ghost {
+  color: var(--fg-soft);
+  padding: 8px 12px;
+}
+
+.btn-ghost:hover {
+  color: var(--fg);
+}
+
+.btn[aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn[aria-disabled="true"]:hover {
+  transform: none;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+}
+
+html[data-theme="dark"] .badge {
+  color: #1c1a17;
+}
+
+.badge-soft {
+  background: var(--chip-bg);
+  color: var(--fg-soft);
+  border: 1px solid var(--border);
+}
+
+@media (max-width: 720px) {
+  section {
+    padding: 60px 0;
+  }
+}
