@@ -17,8 +17,20 @@ pnpm-debug.log*
 .env
 .env.production
 
-# macOS-specific files
+# macOS / iCloud metadata
 .DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd
+.TemporaryItems
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+# iCloud placeholder files for non-downloaded items
+*.icloud
+.*.icloud
 
 # jetbrains setting folder
 .idea/

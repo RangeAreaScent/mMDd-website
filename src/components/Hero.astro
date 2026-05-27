@@ -1,5 +1,10 @@
 ---
 import Logo from "./Logo.astro";
+import {
+  macDownloadHref,
+  winDownloadHref,
+  RELEASES_LIVE,
+} from "../data/links.ts";
 ---
 
 <section id="top" class="hero">
@@ -19,7 +24,7 @@ import Logo from "./Logo.astro";
       </p>
 
       <div class="hero-actions">
-        <a class="btn btn-primary" href="#download" aria-disabled="true">
+        <a class="btn btn-primary" href={macDownloadHref}>
           <svg
             width="16"
             height="16"
@@ -33,7 +38,7 @@ import Logo from "./Logo.astro";
           </svg>
           Download for Mac
         </a>
-        <a class="btn btn-secondary" href="#download" aria-disabled="true">
+        <a class="btn btn-secondary" href={winDownloadHref}>
           <svg
             width="16"
             height="16"
@@ -49,7 +54,11 @@ import Logo from "./Logo.astro";
         </a>
       </div>
       <p class="hero-note">
-        Releases coming soon · Free forever · Open Markdown.
+        {RELEASES_LIVE ? (
+          <>Free forever · Unsigned during launch — <a href="#install">see install note</a>.</>
+        ) : (
+          <>Builds coming to GitHub Releases soon · Free forever.</>
+        )}
       </p>
     </div>
 

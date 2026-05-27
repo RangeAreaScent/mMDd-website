@@ -1,0 +1,258 @@
+---
+// First-time install panel — Mac only for now. Mirrors the friendly,
+// transparent tone used by PasteLight: explain the Gatekeeper block,
+// hand over the exact command, and reassure that it's scoped to mMDd.
+
+const xattrCommand = "xattr -dr com.apple.quarantine /Applications/mMDd.app";
+---
+
+<section id="install" class="install">
+  <div class="container">
+    <div class="install-card">
+      <div class="install-head">
+        <span class="eyebrow eyebrow-tight">First-time install · 30 seconds</span>
+        <h2>Two clicks, one command,<br />and you're writing.</h2>
+        <p class="lede">
+          mMDd is unsigned during the free launch season, so macOS Gatekeeper
+          will block the first launch. Three steps to get through it.
+        </p>
+      </div>
+
+      <ol class="install-steps">
+        <li>
+          <span class="step-num" aria-hidden="true">1</span>
+          <div class="step-body">
+            <p>
+              Open the DMG. Drag <strong>mMDd.app</strong> onto the
+              <strong>Applications</strong> shortcut.
+            </p>
+          </div>
+        </li>
+
+        <li>
+          <span class="step-num" aria-hidden="true">2</span>
+          <div class="step-body">
+            <p>
+              Open <strong>Terminal</strong>
+              (Spotlight → type "Terminal"). Paste this line and hit Return:
+            </p>
+            <div class="codeblock" data-copy-target>
+              <code class="codeblock-text">{xattrCommand}</code>
+              <button
+                class="codeblock-copy"
+                type="button"
+                data-copy={xattrCommand}
+                aria-label="Copy command"
+              >
+                <span class="copy-default">COPY</span>
+                <span class="copy-done">COPIED</span>
+              </button>
+            </div>
+          </div>
+        </li>
+
+        <li>
+          <span class="step-num" aria-hidden="true">3</span>
+          <div class="step-body">
+            <p>
+              Double-click <strong>mMDd</strong> in Applications. Done — it
+              opens, you're in.
+            </p>
+          </div>
+        </li>
+      </ol>
+
+      <p class="install-note">
+        The command above tells macOS "I trust this file" — it removes the
+        quarantine flag Safari attached during download. It changes
+        <em>only</em> mMDd; nothing else on your Mac. The friction disappears
+        entirely once mMDd is signed &amp; notarized.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .install {
+    padding-top: clamp(40px, 6vw, 80px);
+  }
+
+  .install-card {
+    max-width: 760px;
+    margin: 0 auto;
+    background: var(--panel-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: clamp(28px, 4vw, 44px) clamp(24px, 4vw, 48px);
+    box-shadow: 0 18px 40px -22px var(--panel-shadow);
+  }
+
+  .install-head h2 {
+    font-size: clamp(24px, 3vw, 32px);
+    line-height: 1.2;
+    margin: 10px 0 14px;
+  }
+
+  .eyebrow-tight {
+    margin-bottom: 4px;
+  }
+
+  .install-head .lede {
+    font-family: var(--ui-font);
+    font-size: 15px;
+    color: var(--fg-soft);
+    margin-top: 8px;
+  }
+
+  .install-steps {
+    list-style: none;
+    padding: 0;
+    margin: 28px 0 0;
+    counter-reset: step;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .install-steps li {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+
+  .step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    background: var(--chip-bg);
+    border: 1px solid var(--border);
+    color: var(--fg);
+    font-weight: 700;
+    font-size: 13px;
+    font-family: var(--ui-font);
+    margin-top: 1px;
+  }
+
+  .step-body p {
+    color: var(--fg);
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  .step-body strong {
+    font-weight: 600;
+  }
+
+  .codeblock {
+    margin-top: 12px;
+    background: #0e0e10;
+    color: #e7e7eb;
+    border-radius: 10px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-family: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 13.5px;
+    line-height: 1.5;
+    border: 1px solid #1c1c20;
+  }
+
+  :global(html[data-theme="dark"]) .codeblock {
+    background: #0a0907;
+    border-color: #1c1815;
+  }
+
+  .codeblock-text {
+    flex: 1;
+    min-width: 0;
+    word-break: break-all;
+    color: #f3f3f7;
+  }
+
+  .codeblock-copy {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    color: #f3f3f7;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-family: var(--ui-font);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    transition: background-color 0.15s ease;
+    flex-shrink: 0;
+    position: relative;
+  }
+
+  .codeblock-copy:hover {
+    background: rgba(255, 255, 255, 0.16);
+  }
+
+  .copy-done {
+    display: none;
+    color: #6ee06e;
+  }
+
+  .codeblock-copy[data-copied="true"] .copy-default {
+    display: none;
+  }
+
+  .codeblock-copy[data-copied="true"] .copy-done {
+    display: inline;
+  }
+
+  .install-note {
+    margin-top: 26px;
+    padding-top: 22px;
+    border-top: 1px solid var(--hr);
+    color: var(--fg-soft);
+    font-size: 13.5px;
+    line-height: 1.65;
+  }
+
+  .install-note em {
+    color: var(--fg);
+    font-style: italic;
+  }
+
+  @media (max-width: 580px) {
+    .codeblock {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+    }
+    .codeblock-copy {
+      align-self: flex-end;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll(".codeblock-copy").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const text = btn.getAttribute("data-copy") || "";
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch (e) {
+        // Fallback: select-and-copy via a hidden textarea.
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          document.execCommand("copy");
+        } catch (_) {}
+        document.body.removeChild(ta);
+      }
+      btn.setAttribute("data-copied", "true");
+      setTimeout(() => btn.removeAttribute("data-copied"), 1600);
+    });
+  });
+</script>
