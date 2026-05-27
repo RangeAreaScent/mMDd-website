@@ -3,6 +3,8 @@
 // transparent tone used by PasteLight: explain the Gatekeeper block,
 // hand over the exact command, and reassure that it's scoped to mMDd.
 
+import { DOWNLOAD, MAC_RELEASES_LIVE } from "../data/links.ts";
+
 const xattrCommand = "xattr -dr com.apple.quarantine /Applications/mMDd.app";
 ---
 
@@ -68,6 +70,14 @@ const xattrCommand = "xattr -dr com.apple.quarantine /Applications/mMDd.app";
         <em>only</em> mMDd; nothing else on your Mac. The friction disappears
         entirely once mMDd is signed &amp; notarized.
       </p>
+
+      {MAC_RELEASES_LIVE && (
+        <p class="install-arch">
+          Intel Mac?
+          <a href={DOWNLOAD.macIntel}>Download the Intel build</a>
+          instead. (The big button above is Apple Silicon.)
+        </p>
+      )}
     </div>
   </div>
 </section>
@@ -218,6 +228,20 @@ const xattrCommand = "xattr -dr com.apple.quarantine /Applications/mMDd.app";
   .install-note em {
     color: var(--fg);
     font-style: italic;
+  }
+
+  .install-arch {
+    margin-top: 14px;
+    font-size: 13px;
+    color: var(--fg-soft);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: baseline;
+  }
+
+  .install-arch a {
+    font-weight: 500;
   }
 
   @media (max-width: 580px) {

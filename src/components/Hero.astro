@@ -3,7 +3,9 @@ import Logo from "./Logo.astro";
 import {
   macDownloadHref,
   winDownloadHref,
-  RELEASES_LIVE,
+  MAC_RELEASES_LIVE,
+  WIN_RELEASES_LIVE,
+  ANY_RELEASE_LIVE,
 } from "../data/links.ts";
 ---
 
@@ -38,26 +40,34 @@ import {
           </svg>
           Download for Mac
         </a>
-        <a class="btn btn-secondary" href={winDownloadHref}>
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              d="M3 5.48L10.5 4.5v7H3V5.48zm0 13.04l7.5.98v-7H3v6.02zm8.5-7v7.13l9.5 1.34V11.52H11.5zm0-7.13v7.13H21V3.05L11.5 4.39z"
-            ></path>
-          </svg>
-          Download for Windows
-        </a>
+        {WIN_RELEASES_LIVE && (
+          <a class="btn btn-secondary" href={winDownloadHref}>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                d="M3 5.48L10.5 4.5v7H3V5.48zm0 13.04l7.5.98v-7H3v6.02zm8.5-7v7.13l9.5 1.34V11.52H11.5zm0-7.13v7.13H21V3.05L11.5 4.39z"
+              ></path>
+            </svg>
+            Download for Windows
+          </a>
+        )}
       </div>
       <p class="hero-note">
-        {RELEASES_LIVE ? (
-          <>Free forever · Unsigned during launch — <a href="#install">see install note</a>.</>
+        {ANY_RELEASE_LIVE ? (
+          <>
+            Apple Silicon by default · Unsigned during launch —
+            <a href="#install"> see install note</a>.
+          </>
         ) : (
           <>Builds coming to GitHub Releases soon · Free forever.</>
+        )}
+        {MAC_RELEASES_LIVE && !WIN_RELEASES_LIVE && (
+          <span class="hero-note-aside">Windows build coming soon.</span>
         )}
       </p>
     </div>
@@ -164,6 +174,14 @@ const ideas = capture(thoughts)
     margin-top: 16px;
     font-size: 13px;
     color: var(--fg-soft);
+  }
+
+  .hero-note-aside {
+    display: inline-block;
+    margin-left: 10px;
+    padding-left: 10px;
+    border-left: 1px solid var(--hr);
+    opacity: 0.85;
   }
 
   /* ---------- Window mock ---------- */
