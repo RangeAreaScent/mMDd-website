@@ -339,19 +339,72 @@ commit will show with a "Redeploy" button).
 
 macOS Launch Services caches every app's file-type claims. If a previous
 `mmdd.app` (lowercase) was installed, the cache may still route `.md` to
-it — even after dragging the new `mMDd.app` into Applications. One-time
-reset:
+it — even after dragging the new `mMDd.app` into Applications.
+
+Modern macOS (Sequoia+) removed `lsregister -kill`, so the old "nuke the
+whole LS database" trick is gone. Targeted cleanup instead:
 
 ```bash
 rm -rf /Applications/mmdd.app                # remove any old copy
+
+# Force-register the current install
 /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister \
-  -kill -r -domain local -domain system -domain user
-killall Finder
+  -f /Applications/mMDd.app
+
+killall Finder Dock
 ```
 
 Then right-click a `.md` file → Get Info → "Open with" → mMDd → "Change
 All…". The current build registers Editor + Owner rank, so the preference
 sticks against rival apps (VS Code, Obsidian, etc.).
+
+### `mMDd` doesn't appear in Recommended Applications
+
+Real cause: **ghost LS registrations** of `com.mmdd.app` at multiple paths.
+Every time `npm run dist:mac` runs, the new `dist/mac-arm64/mMDd.app` and
+`dist/mac/mMDd.app` get auto-registered alongside the proper
+`/Applications/mMDd.app`. Same bundle ID claiming Owner rank from 3–5
+locations confuses Launch Services so it surfaces *none* of them in the
+user-facing "Recommended" list.
+
+Symptoms: the Open With menu's recommended section skips mMDd entirely,
+and Always Open With doesn't stick.
+
+Verify the duplicates:
+
+```bash
+/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister \
+  -dump 2>/dev/null | grep -E "^path:.*mMDd\.app$|^path:.*mMDd\.app \(" | grep -v Helper
+```
+
+Expected: one line (`/Applications/mMDd.app`). If you see entries under
+`/Volumes/`, `~/.../dist/`, or anywhere else, those are the ghosts.
+
+Fix:
+
+```bash
+# 1. Eject any mounted mMDd DMG (drag /Volumes/mMDd*/ to Trash or use ⌘E)
+
+# 2. Delete the dist/mac* folders — keep the DMG files, drop the .app dirs
+rm -rf dist/mac dist/mac-arm64
+
+# 3. Deregister each ghost path
+/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister \
+  -u "/Volumes/mMDd 1.0.0/mMDd.app"
+/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister \
+  -u "/Users/ryan/.../dist/mac-arm64/mMDd.app"   # paths from the -dump above
+
+# 4. Force-register only the installed copy
+/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister \
+  -f /Applications/mMDd.app
+
+# 5. Refresh the UI
+killall Finder Dock
+```
+
+**Prevent recurrence**: after every `npm run dist:mac`, eject any mounted
+DMG and delete `dist/mac*` once the DMGs are uploaded. The DMG files
+themselves are fine to keep.
 
 ### Vercel deployment failing on `sharp`
 
