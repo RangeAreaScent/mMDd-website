@@ -184,59 +184,64 @@ const defaultIdx = themes.length - 1; // Newsprint
 </section>
 
 <style>
-  /* ---------- Deck layout ---------- */
+  /* ---------- Deck layout — isometric tilt on the whole row ---------- */
 
   .theme-deck-wrap {
-    perspective: 1600px;
-    perspective-origin: 50% 50%;
+    /* Distant perspective = subtle foreshortening, not warped. */
+    perspective: 2400px;
+    perspective-origin: 50% 40%;
     margin: 0 auto;
-    max-width: 920px;
+    max-width: 1100px;
+    /* Padding-bottom prevents the rotated deck from clipping. */
+    padding: 12px 0 60px;
   }
 
   .theme-deck {
     position: relative;
-    /* Tall enough to hold the card + room for the hover lift. */
-    height: 300px;
+    height: 280px;
+    /* The whole row of cards is tilted like a deck of cards on a table
+       seen from the upper-left. Individual cards stay flat — the depth
+       and side angle all come from this single container transform. */
+    transform: rotateX(8deg) rotateY(-22deg);
     transform-style: preserve-3d;
+    transform-origin: 70% 50%;
+    /* Lots of negative right margin lets the cascade overflow the
+       container; cards drift to the right with --idx. */
+    margin-right: -120px;
   }
 
   .deck-card {
-    /* Positioned absolutely so cards can overlap. Each card's left offset
-       is driven by its --idx so the cascade orders left-to-right. */
+    /* Each card is a flat tile on the tilted deck plane. The cascade
+       offset is wider now (90px) so meaningful content of each card
+       peeks out, not just the title bar. */
     position: absolute;
-    top: 14px;
-    left: calc(var(--idx) * 56px);
-    width: 360px;
-    height: 264px;
+    top: 0;
+    left: calc(var(--idx) * 90px);
+    width: 340px;
+    height: 100%;
     padding: 0;
     background: transparent;
     border: none;
     cursor: pointer;
-    /* Cards further left in the cascade sit further back in z-space and
-       lean slightly away. The rightmost card (highest --idx, lowest
-       --depth) is upright and fully visible. */
-    transform: rotateY(-14deg) translateZ(calc(var(--depth) * -10px));
-    transform-origin: 100% 50%;
+    /* Tiny z-step per card so each one sits a hair forward of the
+       previous — gives the cascade a "staircase" feel through the
+       container's perspective. */
+    transform: translateZ(calc(var(--idx) * 4px));
     transition:
       transform 0.45s cubic-bezier(0.2, 0.7, 0.3, 1),
       filter 0.3s ease;
     z-index: var(--idx);
-    filter: brightness(calc(1 - var(--depth) * 0.05));
+    /* Cards further back are dimmed slightly — reads as atmospheric
+       depth and points the eye toward the front card. */
+    filter: brightness(calc(0.84 + var(--idx) * 0.018));
     will-change: transform, filter;
   }
 
-  /* The rightmost (front) card sits flat and full-brightness. */
-  .deck-card:last-child {
-    transform: rotateY(0) translateZ(0);
-    filter: brightness(1);
-  }
-
-  /* Hover: pull this card forward, upright, on top of everything. */
+  /* Hover / focus: pull this card forward and brighten it. */
   .deck-card:hover,
-  .deck-card:focus-visible,
-  .deck-card.is-front {
-    transform: rotateY(0) translateZ(50px) translateY(-10px);
-    filter: brightness(1);
+  .deck-card:focus-visible {
+    transform: translateZ(80px) translateY(-12px);
+    filter: brightness(1.02);
     z-index: 100;
     outline: none;
   }
@@ -374,30 +379,36 @@ const defaultIdx = themes.length - 1; // Newsprint
 
   .theme-deck-wrap:not(.in-view) .deck-card {
     opacity: 0;
-    transform: rotateY(-14deg) translateZ(calc(var(--depth) * -10px))
-      translateX(-30px);
-    transition-delay: calc(var(--idx) * 50ms);
-  }
-
-  .theme-deck-wrap:not(.in-view) .deck-card:last-child {
-    transform: rotateY(0) translateZ(0) translateX(-30px);
+    transform: translateZ(calc(var(--idx) * 4px)) translateX(-40px);
+    transition-delay: calc(var(--idx) * 55ms);
   }
 
   .theme-deck-wrap.in-view .deck-card {
     opacity: 1;
-    transition-delay: calc(var(--idx) * 50ms);
+    transition-delay: calc(var(--idx) * 55ms);
   }
 
   /* ---------- Responsive ---------- */
 
-  @media (max-width: 920px) {
+  @media (max-width: 1100px) {
     .theme-deck {
-      height: 260px;
+      transform: rotateX(8deg) rotateY(-20deg);
+      margin-right: -60px;
     }
     .deck-card {
       width: 300px;
-      height: 220px;
-      left: calc(var(--idx) * 38px);
+      left: calc(var(--idx) * 70px);
+    }
+  }
+
+  @media (max-width: 880px) {
+    .theme-deck {
+      transform: rotateX(6deg) rotateY(-18deg);
+      margin-right: 0;
+    }
+    .deck-card {
+      width: 260px;
+      left: calc(var(--idx) * 55px);
     }
   }
 
@@ -412,6 +423,8 @@ const defaultIdx = themes.length - 1; // Newsprint
       display: flex;
       flex-direction: column;
       gap: 14px;
+      transform: none;
+      margin-right: 0;
     }
     .deck-card {
       position: relative;
