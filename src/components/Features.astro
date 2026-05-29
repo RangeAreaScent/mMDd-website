@@ -1,60 +1,8 @@
 ---
-const features = [
-  {
-    title: "Three view modes, one shortcut",
-    body:
-      "Preview, Split, Editor-only — cycle through them with ⌘E. The icon in the tab bar tells you which mode you're in.",
-    chip: "⌘E",
-  },
-  {
-    title: "Tabs that stay out of your way",
-    body:
-      "Scroll, drag to reorder, middle-click to close. Right-click for Reveal in Finder, Copy Path, Close Others. Ctrl+Tab to cycle.",
-    chip: "Tabs",
-  },
-  {
-    title: "Outline sidebar",
-    body:
-      "Toggle with ⌘⇧O. Walks every heading in the document — click to jump. Built lazily, so it never slows you down.",
-    chip: "⌘⇧O",
-  },
-  {
-    title: "Find. Replace. Repeat.",
-    body:
-      "⌘F to find, ⌘⌥F to replace. Match count, next/prev, regex on the editor side. Undo works exactly as you'd expect.",
-    chip: "⌘F / ⌘⌥F",
-  },
-  {
-    title: "Task lists you can actually check",
-    body:
-      "Click a checkbox in the preview. mMDd toggles [ ] ↔ [x] in your source and marks the tab dirty so you don't lose the change.",
-    chip: "Live",
-  },
-  {
-    title: "Focus mode",
-    body:
-      "⌘. hides every chrome element. Just paper. The status bar comes back when you move the mouse.",
-    chip: "⌘.",
-  },
-  {
-    title: "Image zoom, PDF export",
-    body:
-      "Double-click an image for a full-screen overlay. ⌘⇧E exports a clean PDF that matches your current theme.",
-    chip: "Print-ready",
-  },
-  {
-    title: "Auto-save & atomic writes",
-    body:
-      "Opt into 30-second auto-save. Every save is atomic — a temp file plus a rename, so a power cut never corrupts your draft.",
-    chip: "Safe",
-  },
-  {
-    title: "Front matter handled",
-    body:
-      "YAML and TOML front matter is stripped before rendering. Relative .md links open as new tabs. Images resolve from your file's folder.",
-    chip: "Markdown-aware",
-  },
-];
+// Features grid — Typora-style. Each feature gets a small CSS/SVG
+// illustration that gives a visual hint of what the feature does,
+// plus a title in the vintage red accent and a short body.
+// Nine features in a 3×3 grid; collapses to 2-col then 1-col.
 ---
 
 <section id="features" class="features">
@@ -69,71 +17,736 @@ const features = [
     </div>
 
     <div class="feature-grid">
-      {features.map((f) => (
-        <article class="feature-card">
-          <span class="badge-soft chip">{f.chip}</span>
-          <h3>{f.title}</h3>
-          <p>{f.body}</p>
-        </article>
-      ))}
+      <!-- 1. View modes -->
+      <article class="feature">
+        <div class="art art-viewmodes" aria-hidden="true">
+          <div class="vm-pane vm-pane-preview">
+            <div class="vm-line"></div>
+            <div class="vm-line vm-line-short"></div>
+          </div>
+          <div class="vm-pane vm-pane-split">
+            <div class="vm-line"></div>
+            <div class="vm-line vm-line-short"></div>
+            <div class="vm-divider"></div>
+            <div class="vm-line"></div>
+            <div class="vm-line vm-line-short"></div>
+          </div>
+          <div class="vm-pane vm-pane-editor">
+            <div class="vm-line vm-line-code"></div>
+            <div class="vm-line vm-line-code vm-line-short"></div>
+            <div class="vm-line vm-line-code"></div>
+          </div>
+        </div>
+        <h3>Three view modes</h3>
+        <p>
+          Preview, Split, Editor-only — cycle through them with <kbd>⌘E</kbd>.
+          The icon in the tab bar tells you which mode you're in.
+        </p>
+      </article>
+
+      <!-- 2. Tabs -->
+      <article class="feature">
+        <div class="art art-tabs" aria-hidden="true">
+          <div class="tab-row">
+            <div class="t-tab">essay.md</div>
+            <div class="t-tab t-tab-active">notes.md</div>
+            <div class="t-tab">draft.md</div>
+            <div class="t-tab t-tab-plus">+</div>
+          </div>
+          <div class="tab-canvas"></div>
+        </div>
+        <h3>Tabs that stay out of the way</h3>
+        <p>
+          Scroll, drag to reorder, middle-click to close. Right-click for
+          Reveal in Finder, Copy Path, Close Others. <kbd>⌃Tab</kbd> to cycle.
+        </p>
+      </article>
+
+      <!-- 3. Outline -->
+      <article class="feature">
+        <div class="art art-outline" aria-hidden="true">
+          <div class="ol-sidebar">
+            <div class="ol-h ol-h1">Introduction</div>
+            <div class="ol-h ol-h2">Background</div>
+            <div class="ol-h ol-h2">Goals</div>
+            <div class="ol-h ol-h1 ol-h-active">Method</div>
+            <div class="ol-h ol-h2">Setup</div>
+            <div class="ol-h ol-h2">Procedure</div>
+            <div class="ol-h ol-h1">Results</div>
+          </div>
+          <div class="ol-body">
+            <div class="ol-line"></div>
+            <div class="ol-line ol-line-short"></div>
+            <div class="ol-line"></div>
+          </div>
+        </div>
+        <h3>Outline sidebar</h3>
+        <p>
+          Toggle with <kbd>⌘⇧O</kbd>. Walks every heading in the document
+          — click to jump. Built lazily, so it never slows you down.
+        </p>
+      </article>
+
+      <!-- 4. Find & Replace -->
+      <article class="feature">
+        <div class="art art-find" aria-hidden="true">
+          <div class="find-bar">
+            <svg class="find-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <circle cx="11" cy="11" r="7"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <span class="find-term">paper</span>
+            <span class="find-count">3 of 12</span>
+            <span class="find-arrows">↑ ↓</span>
+          </div>
+          <div class="find-page">
+            <div class="find-line"></div>
+            <div class="find-line">
+              <span class="find-mark">paper</span>
+            </div>
+            <div class="find-line"></div>
+          </div>
+        </div>
+        <h3>Find. Replace. Repeat.</h3>
+        <p>
+          <kbd>⌘F</kbd> to find, <kbd>⌘⌥F</kbd> to replace. Match count,
+          next/prev. Undo works exactly as you'd expect.
+        </p>
+      </article>
+
+      <!-- 5. Task lists -->
+      <article class="feature">
+        <div class="art art-tasks" aria-hidden="true">
+          <div class="task-row">
+            <span class="task-box task-checked">✓</span>
+            <span class="task-text task-strike">Draft the outline</span>
+          </div>
+          <div class="task-row">
+            <span class="task-box task-checked">✓</span>
+            <span class="task-text task-strike">Read the brief</span>
+          </div>
+          <div class="task-row">
+            <span class="task-box"></span>
+            <span class="task-text">Send for review</span>
+          </div>
+          <div class="task-row">
+            <span class="task-box"></span>
+            <span class="task-text">Publish</span>
+          </div>
+        </div>
+        <h3>Task lists you can check</h3>
+        <p>
+          Click a checkbox in the preview. mMDd toggles
+          <kbd>[ ]</kbd> ↔ <kbd>[x]</kbd> in your source and marks the
+          tab dirty so you don't lose it.
+        </p>
+      </article>
+
+      <!-- 6. Focus mode -->
+      <article class="feature">
+        <div class="art art-focus" aria-hidden="true">
+          <div class="focus-chrome focus-faded"></div>
+          <div class="focus-content">
+            <div class="focus-line focus-line-active"></div>
+            <div class="focus-line focus-faded"></div>
+            <div class="focus-line focus-line-short focus-faded"></div>
+          </div>
+        </div>
+        <h3>Focus mode</h3>
+        <p>
+          <kbd>⌘.</kbd> hides every chrome element. Just paper. The status
+          bar comes back when you move the mouse.
+        </p>
+      </article>
+
+      <!-- 7. Image zoom + PDF export -->
+      <article class="feature">
+        <div class="art art-export" aria-hidden="true">
+          <div class="ex-icon ex-image">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+              <circle cx="8.5" cy="9.5" r="1.5"></circle>
+              <path d="M21 16l-5-5-9 9"></path>
+            </svg>
+          </div>
+          <div class="ex-arrow">→</div>
+          <div class="ex-icon ex-pdf">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+            </svg>
+            <span class="ex-pdf-label">PDF</span>
+          </div>
+        </div>
+        <h3>Image zoom, PDF export</h3>
+        <p>
+          Double-click an image for a full-screen overlay.
+          <kbd>⌘⇧E</kbd> exports a clean PDF that matches your current theme.
+        </p>
+      </article>
+
+      <!-- 8. Auto-save -->
+      <article class="feature">
+        <div class="art art-autosave" aria-hidden="true">
+          <div class="as-row">
+            <span class="as-dot"></span>
+            <span class="as-label">essay.md</span>
+            <span class="as-status">Saved 24s ago</span>
+          </div>
+          <div class="as-row">
+            <span class="as-dot as-dot-dirty"></span>
+            <span class="as-label">notes.md</span>
+            <span class="as-status">Saving…</span>
+          </div>
+          <div class="as-row">
+            <span class="as-dot"></span>
+            <span class="as-label">draft.md</span>
+            <span class="as-status">Saved 1m ago</span>
+          </div>
+        </div>
+        <h3>Auto-save & atomic writes</h3>
+        <p>
+          Opt into 30-second auto-save. Every save is atomic — a temp file
+          plus a rename, so a power cut never corrupts your draft.
+        </p>
+      </article>
+
+      <!-- 9. Front matter -->
+      <article class="feature">
+        <div class="art art-frontmatter" aria-hidden="true">
+          <pre class="fm-block">
+<span class="fm-rule">---</span>
+<span class="fm-key">title</span>: <span class="fm-val">On Writing</span>
+<span class="fm-key">date</span>: <span class="fm-val">2026-05-27</span>
+<span class="fm-key">tags</span>: [draft, essay]
+<span class="fm-rule">---</span>
+
+<span class="fm-head"># On Writing</span>
+A clean room and an empty page.</pre>
+        </div>
+        <h3>Front matter handled</h3>
+        <p>
+          YAML and TOML front matter is stripped before rendering. Relative
+          <kbd>.md</kbd> links open as new tabs. Images resolve from the
+          file's folder.
+        </p>
+      </article>
     </div>
   </div>
 </section>
 
 <style>
-  .section-head {
-    margin-bottom: clamp(40px, 6vw, 64px);
-  }
-
-  .section-head h2 {
-    margin-bottom: 18px;
-  }
+  /* ---------- Grid ---------- */
 
   .feature-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 18px;
+    gap: 56px 40px;
   }
 
-  .feature-card {
-    background: var(--panel-bg);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 26px 24px;
-    transition: transform 0.15s ease, border-color 0.15s ease,
-      box-shadow 0.15s ease;
+  .feature {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
   }
 
-  .feature-card:hover {
-    transform: translateY(-2px);
-    border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
-    box-shadow: 0 12px 28px -16px var(--panel-shadow);
+  .feature h3 {
+    font-family: var(--body-font);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent);
+    margin: 0;
+    letter-spacing: -0.005em;
   }
 
-  .chip {
+  .feature p {
+    color: var(--fg-soft);
+    font-size: 14.5px;
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  .feature kbd {
     font-family: var(--ui-font);
+    font-size: 12px;
+    color: var(--fg);
+    background: var(--chip-bg);
+    border: 1px solid var(--border);
+    padding: 1px 6px;
+    border-radius: 4px;
   }
 
-  .feature-card h3 {
-    margin: 14px 0 8px;
+  /* ---------- Shared art canvas ---------- */
+
+  .art {
+    position: relative;
+    height: 150px;
+    background: var(--chip-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  /* ---------- Art 1: View modes ---------- */
+
+  .art-viewmodes {
+    gap: 8px;
+    padding: 14px;
+  }
+
+  .vm-pane {
+    flex: 1;
+    height: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 8px 7px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    position: relative;
+  }
+
+  .vm-line {
+    height: 4px;
+    border-radius: 2px;
+    background: var(--fg-soft);
+    opacity: 0.35;
+  }
+
+  .vm-line-short {
+    width: 60%;
+  }
+
+  .vm-line-code {
+    background: var(--accent);
+    opacity: 0.3;
+    font-family: monospace;
+  }
+
+  .vm-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 2px 0;
+  }
+
+  .vm-pane-editor .vm-line {
+    background: var(--accent);
+    opacity: 0.32;
+  }
+
+  /* ---------- Art 2: Tabs ---------- */
+
+  .art-tabs {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0;
+  }
+
+  .tab-row {
+    display: flex;
+    gap: 2px;
+    padding: 10px 12px 0;
+    background: transparent;
+  }
+
+  .t-tab {
+    padding: 6px 12px 8px;
+    background: color-mix(in srgb, var(--border) 60%, var(--bg));
+    color: var(--fg-soft);
+    border-radius: 5px 5px 0 0;
+    font-family: var(--ui-font);
+    font-size: 10px;
+    font-weight: 500;
+  }
+
+  .t-tab-active {
+    background: var(--bg);
     color: var(--fg);
   }
 
-  .feature-card p {
+  .t-tab-plus {
+    padding: 6px 10px 8px;
     color: var(--fg-soft);
-    font-size: 14.5px;
-    line-height: 1.6;
   }
+
+  .tab-canvas {
+    flex: 1;
+    background: var(--bg);
+    margin: 0 12px 12px;
+    border-radius: 0 0 5px 5px;
+    border: 1px solid var(--border);
+    border-top: none;
+  }
+
+  /* ---------- Art 3: Outline ---------- */
+
+  .art-outline {
+    padding: 0;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .ol-sidebar {
+    width: 100px;
+    padding: 12px 8px;
+    background: color-mix(in srgb, var(--border) 50%, var(--bg));
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border-right: 1px solid var(--border);
+  }
+
+  .ol-h {
+    font-family: var(--ui-font);
+    font-size: 9px;
+    color: var(--fg-soft);
+    padding: 2px 4px;
+    border-radius: 3px;
+  }
+
+  .ol-h1 {
+    font-weight: 700;
+    color: var(--fg);
+  }
+
+  .ol-h2 {
+    padding-left: 10px;
+    font-weight: 400;
+  }
+
+  .ol-h-active {
+    background: color-mix(in srgb, var(--accent) 18%, transparent);
+    color: var(--accent);
+  }
+
+  .ol-body {
+    flex: 1;
+    padding: 18px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    background: var(--bg);
+  }
+
+  .ol-line {
+    height: 4px;
+    border-radius: 2px;
+    background: var(--fg-soft);
+    opacity: 0.32;
+  }
+
+  .ol-line-short {
+    width: 65%;
+  }
+
+  /* ---------- Art 4: Find & Replace ---------- */
+
+  .art-find {
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+    padding: 18px;
+  }
+
+  .find-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 6px 10px;
+    font-family: var(--ui-font);
+    font-size: 11px;
+  }
+
+  .find-icon {
+    width: 12px;
+    height: 12px;
+    color: var(--fg-soft);
+    flex-shrink: 0;
+  }
+
+  .find-term {
+    flex: 1;
+    color: var(--fg);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+  }
+
+  .find-count {
+    color: var(--fg-soft);
+    font-size: 10px;
+  }
+
+  .find-arrows {
+    color: var(--fg-soft);
+    font-size: 11px;
+    letter-spacing: 2px;
+  }
+
+  .find-page {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .find-line {
+    height: 5px;
+    border-radius: 2px;
+    background: var(--fg-soft);
+    opacity: 0.3;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .find-mark {
+    background: color-mix(in srgb, var(--accent) 40%, transparent);
+    padding: 0 6px;
+    border-radius: 2px;
+    font-family: var(--ui-font);
+    font-size: 9px;
+    color: transparent;
+  }
+
+  /* ---------- Art 5: Tasks ---------- */
+
+  .art-tasks {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 18px 22px;
+  }
+
+  .task-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .task-box {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    border: 1.5px solid var(--fg-soft);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    color: var(--bg);
+    flex-shrink: 0;
+  }
+
+  .task-checked {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .task-text {
+    font-family: var(--body-font);
+    font-size: 12.5px;
+    color: var(--fg);
+  }
+
+  .task-strike {
+    color: var(--fg-soft);
+    text-decoration: line-through;
+    text-decoration-thickness: 1px;
+  }
+
+  /* ---------- Art 6: Focus mode ---------- */
+
+  .art-focus {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0;
+    gap: 0;
+    background: var(--bg);
+  }
+
+  .focus-chrome {
+    height: 22px;
+    background: var(--chip-bg);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .focus-content {
+    flex: 1;
+    padding: 20px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 7px;
+  }
+
+  .focus-line {
+    height: 6px;
+    border-radius: 3px;
+    background: var(--fg-soft);
+  }
+
+  .focus-line-active {
+    background: var(--fg);
+    opacity: 1;
+  }
+
+  .focus-line-short {
+    width: 55%;
+  }
+
+  .focus-faded {
+    opacity: 0.18;
+  }
+
+  /* ---------- Art 7: Export ---------- */
+
+  .art-export {
+    gap: 22px;
+  }
+
+  .ex-icon {
+    width: 56px;
+    height: 68px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--fg-soft);
+    position: relative;
+  }
+
+  .ex-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .ex-pdf {
+    color: var(--accent);
+  }
+
+  .ex-pdf-label {
+    position: absolute;
+    bottom: 8px;
+    font-family: var(--ui-font);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+  }
+
+  .ex-arrow {
+    color: var(--fg-soft);
+    font-size: 18px;
+  }
+
+  /* ---------- Art 8: Auto-save ---------- */
+
+  .art-autosave {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+    padding: 18px 22px;
+  }
+
+  .as-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--ui-font);
+    font-size: 11px;
+    padding: 6px 8px;
+    border-radius: 4px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+  }
+
+  .as-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--accent) 30%, transparent);
+    flex-shrink: 0;
+  }
+
+  .as-dot-dirty {
+    background: var(--accent);
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .as-label {
+    flex: 1;
+    color: var(--fg);
+    font-weight: 500;
+  }
+
+  .as-status {
+    color: var(--fg-soft);
+    font-size: 10px;
+  }
+
+  /* ---------- Art 9: Front matter ---------- */
+
+  .art-frontmatter {
+    padding: 14px 18px;
+    background: var(--bg);
+    align-items: stretch;
+    justify-content: flex-start;
+  }
+
+  .fm-block {
+    margin: 0;
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 10px;
+    line-height: 1.45;
+    color: var(--fg);
+    overflow: hidden;
+  }
+
+  .fm-rule {
+    color: var(--fg-soft);
+  }
+
+  .fm-key {
+    color: var(--accent);
+  }
+
+  .fm-val {
+    color: var(--fg);
+  }
+
+  .fm-head {
+    color: var(--fg);
+    font-weight: 700;
+  }
+
+  /* ---------- Responsive ---------- */
 
   @media (max-width: 920px) {
     .feature-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 48px 32px;
     }
   }
 
   @media (max-width: 580px) {
     .feature-grid {
       grid-template-columns: 1fr;
+      gap: 40px;
     }
   }
 </style>
