@@ -71,6 +71,14 @@ const xattrCommand = "xattr -dr com.apple.quarantine /Applications/mMDd.app";
         entirely once mMDd is signed &amp; notarized.
       </p>
 
+      <p class="install-tip">
+        <strong>Want every <kbd class="install-kbd">.md</kbd> file to open in mMDd?</strong>
+        Right-click any Markdown file → <em>Get Info</em> → under
+        <em>"Open with"</em> pick <em>mMDd</em> → click
+        <em>"Change All…"</em>. The "Open With" submenu sets a one-off
+        choice; this is the only place macOS records a real default.
+      </p>
+
       {MAC_RELEASES_LIVE && (
         <p class="install-arch">
           Intel Mac?
@@ -228,6 +236,35 @@ const xattrCommand = "xattr -dr com.apple.quarantine /Applications/mMDd.app";
   .install-note em {
     color: var(--fg);
     font-style: italic;
+  }
+
+  .install-tip {
+    margin-top: 14px;
+    color: var(--fg-soft);
+    font-size: 13.5px;
+    line-height: 1.65;
+  }
+
+  .install-tip strong {
+    color: var(--fg);
+    font-weight: 600;
+  }
+
+  .install-tip em {
+    color: var(--fg);
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  .install-kbd {
+    display: inline-block;
+    background: var(--chip-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0 5px;
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 12px;
+    color: var(--fg);
   }
 
   .install-arch {
