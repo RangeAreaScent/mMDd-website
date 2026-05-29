@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c4493b"/>
+      <stop offset="0.55" stop-color="#b03a2e"/>
+      <stop offset="1" stop-color="#94301f"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="white" stop-opacity="0.18"/>
+      <stop offset="0.5" stop-color="white" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- App tile -->
+  <rect x="0" y="0" width="1024" height="1024" rx="230" ry="230" fill="url(#bg)"/>
+  <rect x="0" y="0" width="1024" height="1024" rx="230" ry="230" fill="url(#shine)"/>
+
+  <!-- Logotype — sized so the cap-height sits comfortably inside
+       the squircle with ~17% safe area on each side. -->
+  <text x="50%" y="54%"
+        text-anchor="middle"
+        dominant-baseline="central"
+        font-family="'New York', 'Iowan Old Style', 'Times New Roman', Georgia, serif"
+        font-weight="700"
+        font-size="300"
+        letter-spacing="-8"
+        fill="#f7f1e3">mMDd</text>
+</svg>

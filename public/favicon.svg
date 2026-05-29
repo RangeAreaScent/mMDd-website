@@ -1,6 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#b03a2e"/>
-  <text x="50%" y="56%" text-anchor="middle" dominant-baseline="middle"
-    font-family="Georgia, 'New York', serif" font-weight="700" font-size="22"
-    fill="#f7f1e3" letter-spacing="-0.5">mMDd</text>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c4493b"/>
+      <stop offset="0.55" stop-color="#b03a2e"/>
+      <stop offset="1" stop-color="#94301f"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#bg)"/>
+  <text x="50%" y="54%" text-anchor="middle" dominant-baseline="central"
+    font-family="'New York', 'Iowan Old Style', 'Times New Roman', Georgia, serif"
+    font-weight="700" font-size="19" letter-spacing="-0.5"
+    fill="#f7f1e3">mMDd</text>
 </svg>
