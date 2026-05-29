@@ -1,13 +1,13 @@
 ---
 // Theme palettes mirror the app's themes.css so the preview cards are
-// pixel-accurate. Pro themes get a star badge.
+// pixel-accurate. The "tagline" is what shows under the deck for the
+// currently surfaced card.
 
 const themes = [
   {
     id: "mmdd",
     label: "mMDd",
-    pro: false,
-    dark: false,
+    tagline: "Crisp white, indigo accent.",
     bg: "#ffffff",
     fg: "#2c2c2e",
     fgSoft: "#6e6e73",
@@ -18,8 +18,7 @@ const themes = [
   {
     id: "mmdd-dark",
     label: "mMDd dark",
-    pro: false,
-    dark: true,
+    tagline: "Inky slate, soft indigo.",
     bg: "#1c1c22",
     fg: "#d4d4d8",
     fgSoft: "#8a8a93",
@@ -28,35 +27,9 @@ const themes = [
     codeBg: "#26262e",
   },
   {
-    id: "newsprint",
-    label: "Newsprint",
-    pro: false,
-    dark: false,
-    bg: "#f7f7f4",
-    fg: "#2b2b2b",
-    fgSoft: "#6b6b6b",
-    accent: "#b03a2e",
-    border: "#e0e0da",
-    codeBg: "#ededea",
-    note: "Default",
-  },
-  {
-    id: "newsprint-dark",
-    label: "Newsprint dark",
-    pro: false,
-    dark: true,
-    bg: "#1c1a17",
-    fg: "#e8e3d6",
-    fgSoft: "#a09b8e",
-    accent: "#d2876d",
-    border: "#2e2a26",
-    codeBg: "#26221e",
-  },
-  {
     id: "solarized",
     label: "Solarized",
-    pro: true,
-    dark: false,
+    tagline: "Aged paper, ocean blue.",
     bg: "#fdf6e3",
     fg: "#586e75",
     fgSoft: "#93a1a1",
@@ -67,8 +40,7 @@ const themes = [
   {
     id: "night-owl",
     label: "Night Owl",
-    pro: true,
-    dark: true,
+    tagline: "Deep blue night, lime strings.",
     bg: "#011627",
     fg: "#d6deeb",
     fgSoft: "#5f7e97",
@@ -79,8 +51,7 @@ const themes = [
   {
     id: "forest",
     label: "Forest",
-    pro: true,
-    dark: true,
+    tagline: "Mossy green, soft pine.",
     bg: "#1b2420",
     fg: "#cdd6cf",
     fgSoft: "#7c8a80",
@@ -91,8 +62,7 @@ const themes = [
   {
     id: "coder",
     label: "Coder",
-    pro: true,
-    dark: true,
+    tagline: "Pure black, electric green.",
     bg: "#0c0f0d",
     fg: "#b8c2b9",
     fgSoft: "#6e7c70",
@@ -103,8 +73,7 @@ const themes = [
   {
     id: "matrix",
     label: "Matrix",
-    pro: true,
-    dark: true,
+    tagline: "Phosphor glow on black.",
     bg: "#000000",
     fg: "#6ee06e",
     fgSoft: "#2e6b2e",
@@ -112,17 +81,34 @@ const themes = [
     border: "#143014",
     codeBg: "#060c06",
   },
+  {
+    id: "newsprint-dark",
+    label: "Newsprint dark",
+    tagline: "Twilight paper, sun-faded red.",
+    bg: "#1c1a17",
+    fg: "#e8e3d6",
+    fgSoft: "#a09b8e",
+    accent: "#d2876d",
+    border: "#2e2a26",
+    codeBg: "#26221e",
+  },
+  {
+    id: "newsprint",
+    label: "Newsprint",
+    tagline: "Warm cream paper, vintage red.",
+    isDefault: true,
+    bg: "#f7f7f4",
+    fg: "#2b2b2b",
+    fgSoft: "#6b6b6b",
+    accent: "#b03a2e",
+    border: "#e0e0da",
+    codeBg: "#ededea",
+  },
 ];
+// Newsprint sits at the rightmost (front) position so the default theme
+// is what's fully visible on page load. The rest cascade behind it.
 
-// Per-card lean angles — small, varied so the row looks like books that
-// settled at slightly different tilts. Pattern repeats every 3 (one shelf).
-const leanAngles = [-7, 4, -3, 6, -5, 2, -4, 5, -6];
-
-// Group themes into rows of three (one row = one shelf).
-const shelves: (typeof themes)[] = [];
-for (let i = 0; i < themes.length; i += 3) {
-  shelves.push(themes.slice(i, i + 3));
-}
+const defaultIdx = themes.length - 1; // Newsprint
 ---
 
 <section id="themes" class="themes">
@@ -131,231 +117,190 @@ for (let i = 0; i < themes.length; i += 3) {
       <div class="eyebrow">Themes</div>
       <h2>Nine themes.<br />One feels like home.</h2>
       <p class="lede">
-        Four themes are free and ship with every install. Five more come as a
-        small thank-you for supporters — including the iconic Newsprint, our
-        default, with its warm paper and vintage red.
+        Hover any card to bring it forward. Newsprint is the default — its
+        warm paper and vintage red is the look mMDd ships with.
       </p>
     </div>
 
-    <div class="theme-stage" data-theme-stage>
-      <div class="theme-shelves">
-        {shelves.map((shelfThemes, shelfIdx) => (
-          <div class="theme-shelf">
-            <div class="theme-shelf-row">
-              {shelfThemes.map((t, cardIdx) => {
-                const globalIdx = shelfIdx * 3 + cardIdx;
-                const lean = leanAngles[globalIdx] ?? 0;
-                return (
-                  <article
-                    class={`theme-card theme-card-stack ${t.dark ? "is-dark" : "is-light"}`}
-                    style={`
-                      --t-bg:${t.bg};
-                      --t-fg:${t.fg};
-                      --t-fg-soft:${t.fgSoft};
-                      --t-accent:${t.accent};
-                      --t-border:${t.border};
-                      --t-code:${t.codeBg};
-                      --lean:${lean}deg;
-                      --stagger:${globalIdx * 70}ms;
-                    `}
-                    data-card
-                  >
-                    <div class="theme-preview">
-                      <div class="tp-titlebar">
-                        <span class="tp-dot" style="background:#ff5f57"></span>
-                        <span class="tp-dot" style="background:#febc2e"></span>
-                        <span class="tp-dot" style="background:#28c840"></span>
-                      </div>
-                      <div class="tp-body">
-                        <div class="tp-h">A Few Lines</div>
-                        <div class="tp-line"></div>
-                        <div class="tp-line tp-line-short"></div>
-                        <div class="tp-quote">"a quiet line."</div>
-                        <div class="tp-code">
-                          <span class="tp-tok-k">const</span>
-                          <span class="tp-tok-i"> idea</span>
-                          <span> = "spark";</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="theme-meta">
-                      <div class="theme-name">
-                        {t.label}
-                        {t.note && <span class="theme-note">{t.note}</span>}
-                      </div>
-                      {t.pro ? (
-                        <span class="badge">Supporter</span>
-                      ) : (
-                        <span class="badge-soft">Free</span>
-                      )}
-                    </div>
-                  </article>
-                );
-              })}
+    <div
+      class="theme-deck-wrap"
+      data-theme-deck
+      data-default-idx={defaultIdx}
+    >
+      <div class="theme-deck">
+        {themes.map((t, i) => (
+          <button
+            class="deck-card"
+            type="button"
+            data-card-idx={i}
+            aria-label={`${t.label} theme`}
+            style={`
+              --t-bg:${t.bg};
+              --t-fg:${t.fg};
+              --t-fg-soft:${t.fgSoft};
+              --t-accent:${t.accent};
+              --t-border:${t.border};
+              --t-code:${t.codeBg};
+              --idx:${i};
+              --depth:${themes.length - 1 - i};
+            `}
+          >
+            <div class="card-frame">
+              <div class="card-titlebar">
+                <span class="td-dot" style="background:#ff5f57"></span>
+                <span class="td-dot" style="background:#febc2e"></span>
+                <span class="td-dot" style="background:#28c840"></span>
+              </div>
+              <div class="card-body">
+                <div class="cd-h">A Few Lines</div>
+                <div class="cd-line"></div>
+                <div class="cd-line cd-line-short"></div>
+                <div class="cd-quote">"a quiet line."</div>
+                <div class="cd-code">
+                  <span class="cd-tok-k">const</span>
+                  <span class="cd-tok-i"> idea</span>
+                  <span> = "spark";</span>
+                </div>
+              </div>
+              <div class="card-name">{t.label}</div>
             </div>
-            <div class="theme-shelf-board" aria-hidden="true"></div>
-          </div>
+          </button>
         ))}
+      </div>
+
+      <div class="deck-caption">
+        <div class="caption-name" data-caption-name>
+          {themes[defaultIdx].label}
+          {themes[defaultIdx].isDefault && (
+            <span class="caption-default">· Default</span>
+          )}
+        </div>
+        <div class="caption-tagline" data-caption-tagline>
+          {themes[defaultIdx].tagline}
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <style>
-  /* ---------- Stage: the room we view the shelf from ---------- */
+  /* ---------- Deck layout ---------- */
 
-  .theme-stage {
-    perspective: 1800px;
-    perspective-origin: 50% 25%;
-    padding: 20px 0 0;
+  .theme-deck-wrap {
+    perspective: 1600px;
+    perspective-origin: 50% 50%;
+    margin: 0 auto;
+    max-width: 920px;
   }
 
-  .theme-shelves {
-    display: flex;
-    flex-direction: column;
-    gap: 36px;
-    transform-style: preserve-3d;
-  }
-
-  /* ---------- A single shelf (one row) ---------- */
-
-  .theme-shelf {
+  .theme-deck {
     position: relative;
-    /* Slight tilt of the whole shelf — like looking down at it. */
-    transform: rotateX(6deg);
+    /* Tall enough to hold the card + room for the hover lift. */
+    height: 300px;
     transform-style: preserve-3d;
   }
 
-  .theme-shelf-row {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 24px;
-    align-items: end;
-    transform-style: preserve-3d;
-  }
-
-  /* ---------- Wooden shelf board under each row ---------- */
-
-  .theme-shelf-board {
-    margin-top: -2px;
-    height: 8px;
-    border-radius: 2px;
-    background: linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--accent) 28%, var(--border)) 0%,
-      color-mix(in srgb, var(--accent) 14%, var(--border)) 55%,
-      var(--border) 100%
-    );
-    box-shadow:
-      0 1px 0 rgba(0, 0, 0, 0.05) inset,
-      0 12px 20px -16px var(--panel-shadow);
-    transform: translateZ(-2px);
-  }
-
-  /* ---------- Each "book" / theme card ---------- */
-
-  /* Default = pre-scroll resting state: faded, sunk slightly into the shelf.
-     Single source of truth for transform — no double-declares. */
-  .theme-card-stack {
-    transform-origin: 50% 100%;
-    transform: rotateY(var(--lean, 0deg)) translateY(28px);
-    opacity: 0;
+  .deck-card {
+    /* Positioned absolutely so cards can overlap. Each card's left offset
+       is driven by its --idx so the cascade orders left-to-right. */
+    position: absolute;
+    top: 14px;
+    left: calc(var(--idx) * 56px);
+    width: 360px;
+    height: 264px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    /* Cards further left in the cascade sit further back in z-space and
+       lean slightly away. The rightmost card (highest --idx, lowest
+       --depth) is upright and fully visible. */
+    transform: rotateY(-14deg) translateZ(calc(var(--depth) * -10px));
+    transform-origin: 100% 50%;
     transition:
-      transform 0.55s cubic-bezier(0.2, 0.7, 0.3, 1)
-        var(--stagger, 0ms),
-      opacity 0.55s ease var(--stagger, 0ms),
-      box-shadow 0.3s ease;
-    will-change: transform, opacity;
-    box-shadow:
-      0 12px 22px -14px var(--panel-shadow),
-      0 2px 6px -3px rgba(0, 0, 0, 0.12);
+      transform 0.45s cubic-bezier(0.2, 0.7, 0.3, 1),
+      filter 0.3s ease;
+    z-index: var(--idx);
+    filter: brightness(calc(1 - var(--depth) * 0.05));
+    will-change: transform, filter;
   }
 
-  /* Scrolled into view → books rise to the shelf and lean naturally. */
-  .theme-stage.in-view .theme-card-stack {
-    transform: rotateY(var(--lean, 0deg));
-    opacity: 1;
+  /* The rightmost (front) card sits flat and full-brightness. */
+  .deck-card:last-child {
+    transform: rotateY(0) translateZ(0);
+    filter: brightness(1);
   }
 
-  /* Hover (only meaningful after rise): pull the book forward. */
-  .theme-stage.in-view .theme-card-stack:hover {
-    transform: rotateY(0deg) translateZ(60px) translateY(-8px);
-    box-shadow:
-      0 28px 50px -22px var(--panel-shadow),
-      0 6px 14px -8px rgba(0, 0, 0, 0.2);
-    z-index: 2;
+  /* Hover: pull this card forward, upright, on top of everything. */
+  .deck-card:hover,
+  .deck-card:focus-visible,
+  .deck-card.is-front {
+    transform: rotateY(0) translateZ(50px) translateY(-10px);
+    filter: brightness(1);
+    z-index: 100;
+    outline: none;
   }
 
-  /* Shelf board fades in slightly after the books. */
-  .theme-shelf-board {
-    opacity: 0;
-    transition: opacity 0.6s ease 0.15s;
-  }
+  /* ---------- The card frame itself (looks like an app window) ---------- */
 
-  .theme-stage.in-view .theme-shelf-board {
-    opacity: 1;
-  }
-
-  /* ---------- Inherited card internals (unchanged) ---------- */
-
-  .theme-card {
-    background: var(--panel-bg);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-  }
-
-  .theme-preview {
+  .card-frame {
+    width: 100%;
+    height: 100%;
     background: var(--t-bg);
     color: var(--t-fg);
-    padding: 12px 16px 18px;
-    border-bottom: 1px solid var(--border);
-    aspect-ratio: 16 / 10;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--t-border) 70%, transparent);
+    box-shadow:
+      0 18px 32px -20px rgba(0, 0, 0, 0.45),
+      0 4px 10px -4px rgba(0, 0, 0, 0.18);
     display: flex;
     flex-direction: column;
+    pointer-events: none;
   }
 
-  .tp-titlebar {
+  .card-titlebar {
     display: flex;
     gap: 5px;
-    margin-bottom: 14px;
+    padding: 11px 14px 0;
   }
 
-  .tp-dot {
+  .td-dot {
     width: 9px;
     height: 9px;
     border-radius: 50%;
     display: inline-block;
   }
 
-  .tp-body {
+  .card-body {
     flex: 1;
+    padding: 16px 18px 12px;
     display: flex;
     flex-direction: column;
     gap: 8px;
     font-family: var(--body-font);
   }
 
-  .tp-h {
+  .cd-h {
     font-weight: 700;
     font-size: 14px;
     color: var(--t-fg);
-    padding-bottom: 5px;
+    padding-bottom: 6px;
     border-bottom: 1px solid var(--t-border);
   }
 
-  .tp-line {
+  .cd-line {
     height: 6px;
     border-radius: 3px;
     background: var(--t-fg-soft);
     opacity: 0.35;
   }
 
-  .tp-line-short {
+  .cd-line-short {
     width: 60%;
   }
 
-  .tp-quote {
+  .cd-quote {
     font-style: italic;
     font-size: 11px;
     color: var(--t-fg-soft);
@@ -364,7 +309,7 @@ for (let i = 0; i < themes.length; i += 3) {
     line-height: 1.4;
   }
 
-  .tp-code {
+  .cd-code {
     background: var(--t-code);
     padding: 6px 8px;
     border-radius: 4px;
@@ -374,93 +319,174 @@ for (let i = 0; i < themes.length; i += 3) {
     margin-top: auto;
   }
 
-  .tp-tok-k {
+  .cd-tok-k {
     color: var(--t-accent);
   }
 
-  .tp-tok-i {
+  .cd-tok-i {
     color: var(--t-fg);
     opacity: 0.85;
   }
 
-  .theme-meta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 16px;
+  /* Theme name inside the card, just under the body. Mirrors how the
+     window status bar reads in the app. */
+  .card-name {
+    padding: 8px 16px 10px;
+    font-family: var(--body-font);
+    font-size: 12px;
+    color: var(--t-fg-soft);
+    border-top: 1px solid var(--t-border);
+    background: var(--t-bg);
   }
 
-  .theme-name {
+  /* ---------- Caption under the deck ---------- */
+
+  .deck-caption {
+    margin-top: 28px;
+    text-align: center;
+    min-height: 44px;
+  }
+
+  .caption-name {
+    font-family: var(--body-font);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--fg);
+    transition: opacity 0.2s ease;
+  }
+
+  .caption-default {
+    color: var(--accent);
     font-weight: 600;
     font-size: 14px;
-    color: var(--fg);
-    display: inline-flex;
-    align-items: baseline;
-    gap: 8px;
+    margin-left: 6px;
+    letter-spacing: 0.02em;
   }
 
-  .theme-note {
-    font-size: 11px;
+  .caption-tagline {
+    margin-top: 4px;
+    font-size: 14px;
     color: var(--fg-soft);
-    font-weight: 500;
+    transition: opacity 0.2s ease;
   }
 
-  /* ---------- Responsive: collapse the bookshelf on small screens ---------- */
+  /* ---------- Scroll-in: cards fan in from the left ---------- */
+
+  .theme-deck-wrap:not(.in-view) .deck-card {
+    opacity: 0;
+    transform: rotateY(-14deg) translateZ(calc(var(--depth) * -10px))
+      translateX(-30px);
+    transition-delay: calc(var(--idx) * 50ms);
+  }
+
+  .theme-deck-wrap:not(.in-view) .deck-card:last-child {
+    transform: rotateY(0) translateZ(0) translateX(-30px);
+  }
+
+  .theme-deck-wrap.in-view .deck-card {
+    opacity: 1;
+    transition-delay: calc(var(--idx) * 50ms);
+  }
+
+  /* ---------- Responsive ---------- */
 
   @media (max-width: 920px) {
-    .theme-shelf {
-      transform: none;
+    .theme-deck {
+      height: 260px;
     }
-
-    .theme-shelf-row {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    .deck-card {
+      width: 300px;
+      height: 220px;
+      left: calc(var(--idx) * 38px);
     }
+  }
 
-    .theme-card-stack {
-      transform: none !important;
-    }
-
-    .theme-card-stack:hover {
-      transform: translateY(-3px) !important;
-    }
-
-    .theme-stage {
+  @media (max-width: 680px) {
+    /* Below this size the cascade gets too cramped — drop to a vertical
+       scroller so the user can still browse all themes. */
+    .theme-deck-wrap {
       perspective: none;
     }
-
-    .theme-shelf-board {
+    .theme-deck {
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .deck-card {
+      position: relative;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 220px;
+      transform: none !important;
+      filter: none !important;
+      z-index: auto;
+    }
+    .deck-card:hover {
+      transform: translateY(-4px) !important;
+    }
+    .deck-caption {
       display: none;
     }
   }
 
-  @media (max-width: 580px) {
-    .theme-shelf-row {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  /* ---------- Honor reduced motion ---------- */
+  /* ---------- Reduced motion ---------- */
 
   @media (prefers-reduced-motion: reduce) {
-    .theme-shelf {
-      transform: none;
-    }
-    .theme-card-stack {
-      transform: none !important;
+    .deck-card,
+    .theme-deck-wrap:not(.in-view) .deck-card {
+      transition: none !important;
       opacity: 1 !important;
-      transition: none;
     }
-    .theme-shelf-board {
-      opacity: 1;
+    .deck-card:hover {
+      transform: translateY(-4px);
     }
   }
 </style>
 
 <script>
-  // Trigger the "books rise onto the shelf" animation when the section
-  // scrolls into view. Once is enough — books don't fall off the shelf.
-  const stage = document.querySelector("[data-theme-stage]");
-  if (stage) {
+  // Update the caption to reflect whichever card the user is currently
+  // hovering / focusing. Falls back to the default (rightmost) theme.
+  const wrap = document.querySelector("[data-theme-deck]");
+  if (wrap) {
+    const cards = wrap.querySelectorAll(".deck-card");
+    const nameEl = wrap.querySelector("[data-caption-name]");
+    const taglineEl = wrap.querySelector("[data-caption-tagline]");
+    const defaultIdx = Number(wrap.getAttribute("data-default-idx") || 0);
+
+    // Theme data parallel to the array above — kept inline so the script
+    // doesn't need a JSON fetch. (Astro can't share JS data with inline
+    // scripts directly, so we mirror the labels/taglines here.)
+    const captions = [
+      { label: "mMDd", tagline: "Crisp white, indigo accent." },
+      { label: "mMDd dark", tagline: "Inky slate, soft indigo." },
+      { label: "Solarized", tagline: "Aged paper, ocean blue." },
+      { label: "Night Owl", tagline: "Deep blue night, lime strings." },
+      { label: "Forest", tagline: "Mossy green, soft pine." },
+      { label: "Coder", tagline: "Pure black, electric green." },
+      { label: "Matrix", tagline: "Phosphor glow on black." },
+      { label: "Newsprint dark", tagline: "Twilight paper, sun-faded red." },
+      { label: "Newsprint", tagline: "Warm cream paper, vintage red.", isDefault: true },
+    ];
+
+    function setCaption(i) {
+      const c = captions[i];
+      if (!c || !nameEl || !taglineEl) return;
+      nameEl.innerHTML =
+        c.label +
+        (c.isDefault ? ' <span class="caption-default">· Default</span>' : "");
+      taglineEl.textContent = c.tagline;
+    }
+
+    cards.forEach((card, i) => {
+      card.addEventListener("mouseenter", () => setCaption(i));
+      card.addEventListener("focus", () => setCaption(i));
+    });
+
+    wrap.addEventListener("mouseleave", () => setCaption(defaultIdx));
+
+    // Scroll-in trigger.
     const io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -470,8 +496,8 @@ for (let i = 0; i < themes.length; i += 3) {
           }
         }
       },
-      { threshold: 0.18 },
+      { threshold: 0.15 },
     );
-    io.observe(stage);
+    io.observe(wrap);
   }
 </script>
