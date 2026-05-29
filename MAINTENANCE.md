@@ -99,17 +99,21 @@ End-to-end flow when you've built a new DMG in the `mMDd/dist/` folder:
 
 ### 5.1. Rename DMGs to the canonical pattern
 
-Electron-builder spits out `mmdd-1.0.X-arm64.dmg`. We host them as
-`mMDd-mac-arm64.dmg` so the site's `/latest/download/<name>` URL stays
-stable across versions.
+Electron-builder spits out `mMDd-1.0.X-arm64.dmg` (as of `productName: "mMDd"`).
+We host them as `mMDd-mac-arm64.dmg` so the site's `/latest/download/<name>`
+URL stays stable across versions.
 
 ```bash
 cd ~/Library/Mobile\ Documents/com~apple~CloudDocs/App\ Projects/mMDd
-cp dist/mmdd-1.0.1-arm64.dmg dist/mMDd-mac-arm64.dmg
-cp dist/mmdd-1.0.1.dmg       dist/mMDd-mac-x64.dmg
+cp dist/mMDd-1.0.1-arm64.dmg dist/mMDd-mac-arm64.dmg
+cp dist/mMDd-1.0.1.dmg       dist/mMDd-mac-x64.dmg
 ```
 
 (Use `cp`, not `mv`, so the original-named files stay for your records.)
+
+> **Overwriting an existing release** (e.g. you only changed the icon and
+> want to keep the v1.0.0 tag): use `gh release upload --clobber` instead of
+> `gh release create`. Same asset names just get replaced in place.
 
 ### 5.2. Create the release on the **public** repo
 
@@ -236,6 +240,32 @@ the old domain.
 
 ---
 
+## 9b. Regenerating the brand icon
+
+The app icon, favicon, and a 256px helper are all generated from one SVG
+in `scripts/build-icon.mjs`. To tweak the design (color, radius, font size):
+
+```bash
+# Edit the SVG inside scripts/build-icon.mjs, then:
+node scripts/build-icon.mjs
+
+# Apply to the app too:
+cp public/icon.png ../build/icon.png
+
+# Commit both repos (this one + the app repo). Next dist:mac picks it up.
+```
+
+Outputs land in `public/`:
+
+- `icon.svg` — vector source (also handy for OG image scaffolding)
+- `icon.png` — 1024×1024 master (what electron-builder rasterizes from)
+- `icon-256.png` — small bitmap (favicon fallback, social previews)
+
+`public/favicon.svg` has the same gradient + glyph as `icon.svg` and should
+stay in sync when the icon changes.
+
+---
+
 ## 10. Light / dark theme
 
 The site has two themes that mirror the app:
@@ -304,6 +334,39 @@ Should match exactly `mMDd-mac-arm64.dmg` / `mMDd-mac-x64.dmg` /
 Vercel cache. Hard-refresh (⌘⇧R on Mac) bypasses browser cache. If Vercel
 itself is stale, trigger a redeploy from the Vercel dashboard (the latest
 commit will show with a "Redeploy" button).
+
+### `.md` files still open with the old editor after install
+
+macOS Launch Services caches every app's file-type claims. If a previous
+`mmdd.app` (lowercase) was installed, the cache may still route `.md` to
+it — even after dragging the new `mMDd.app` into Applications. One-time
+reset:
+
+```bash
+rm -rf /Applications/mmdd.app                # remove any old copy
+/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister \
+  -kill -r -domain local -domain system -domain user
+killall Finder
+```
+
+Then right-click a `.md` file → Get Info → "Open with" → mMDd → "Change
+All…". The current build registers Editor + Owner rank, so the preference
+sticks against rival apps (VS Code, Obsidian, etc.).
+
+### Vercel deployment failing on `sharp`
+
+`scripts/build-icon.mjs` uses `sharp` to render the icon SVG. The script
+runs locally, not on Vercel — but if you ever wire it into the build
+step, Vercel needs the right native binary for its Linux runtime. Easier
+fix: commit the rendered `public/icon.png` so deploys never need to run
+the generator.
+
+### Local dev server serves stale CSS
+
+Astro's Vite HMR sometimes hangs onto an old stylesheet after big edits
+(e.g. renaming classes). Symptom: the new HTML is there but cards have
+no styling. Fix: stop the dev server (q + Enter), then `npm run dev`
+again. Don't rely on hot reload across structural changes.
 
 ---
 

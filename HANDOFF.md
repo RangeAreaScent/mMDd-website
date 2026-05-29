@@ -198,21 +198,36 @@ The first thing visitors see.
   hand-coded; no PNG, so it themes with the page.
 
 ### `Features.astro`
-3×3 grid of cards. Data comes from a local `features` array — title,
-body, and a small chip (often a keyboard shortcut). Edits are
-data-driven; layout flexes to N items.
+Typora-style 3×3 grid. Each card has a small CSS/SVG illustration (a
+mini-mockup of the feature — split view panes, tabs row, outline
+sidebar, find bar with a highlighted match, task list, focus mode,
+image→PDF export icons, auto-save status rows with a pulsing dirty
+dot, and a YAML front-matter snippet) sitting above a vintage-red
+title and a short body. No card chrome — just spacing and the
+illustration tile (`.art` class) on a chip-bg background. Edits are
+inline rather than data-driven because each illustration is bespoke.
 
 ### `Themes.astro`
-3×3 grid showing all 9 themes. Each card has a mini-window mockup
-(window chrome, fake heading + lines + quote + code) rendered in that
-theme's actual CSS colors via inline `style="--t-bg:…;…"` variables.
-Free themes show a "Free" pill, supporter themes show "Supporter" in the
-accent color. Hover lifts the card.
+Single-row cascade of all 9 themes. Each "window" card is positioned
+absolutely at `left: var(--idx) * 78px` with z-index increasing
+left-to-right, so the rightmost card (Newsprint, the default) is
+fully visible while the others peek out from behind with just their
+title bars and a strip of content. Each card uses inline
+`style="--t-bg:…;…"` CSS variables to render its preview content
+(heading, copy, link, quote, code) in that theme's palette. Static
+display — no hover, no caption, no 3D tilt; cards just fade in
+left-to-right when the section scrolls into view. Falls back to a
+horizontal scroll-snap carousel below 680px.
 
 ### `Fonts.astro`
-2×4 grid showing all 8 fonts. Each card renders a 19px sample paragraph
-in the actual typeface (loaded from Google Fonts in Layout). Free vs
-Supporter badges as in Themes.
+4×2 specimen wall — 8 cells in a tight grid with hairline dividers.
+Each cell shows the font's **name** rendered in its own typeface
+(`font-size: 20px`), plus an optional small note ("Default", "Pairs
+with Matrix"). No sample sentence, no Supporter badge — the
+free/supporter split lives only in the section lede. Padding is
+tight (16px vertical, 22px horizontal, 90px min-height) so the
+section stays scannable. iA Writer Quattro isn't on Google Fonts,
+so it approximates with Inter for that one cell.
 
 ### `Support.astro`
 The thank-you / BMC card. Left: copy ("mMDd is free. Forever.") + BMC
@@ -248,6 +263,11 @@ care.", "No tracking. No telemetry. Just Markdown."
 | Canonical asset naming (`mMDd-mac-arm64.dmg`) | The `/releases/latest/download/<name>` URL pattern stays stable across versions. No website redeploy needed for routine releases. |
 | `links.ts` as single source of truth | Easier mental model than chasing hrefs through 9 components. One file to update when repo names / domains change. |
 | No analytics / no cookies | "No tracking. No telemetry." in the footer. Matches the app's positioning. If analytics ever needed, use Plausible or similar privacy-friendly option. |
+| Themes: single-row cascade, not bookshelf or 3D isometric | Tried both — bookshelf's 3 rows broke the "nine themes at a glance" promise, and the isometric tilt caused cards to collapse visually under perspective. A flat z-stacked row reads instantly: "Newsprint is the default, others exist." |
+| Themes: no hover-to-front, no caption | Each card already shows its theme name inside the window title bar. A separate caption + interactive selector added cognitive load without adding info. Visitors aren't shopping themes here, they're absorbing variety. |
+| Features: per-card bespoke illustrations | A unified icon set would be easier to maintain but less convincing — Typora's strength is that each feature card looks like a tiny screenshot of that feature. CSS mockups (window chrome, fake content rendered in theme colors) get most of that effect without bundling images. |
+| Fonts: name-in-its-own-face, no sample sentence | The sample sentence repeated 8 times was filler. The font's own name set in its own typeface conveys character with no extra reading. The free/supporter split moved to the lede because per-card badges drew the eye away from the typefaces. |
+| Icon source in this repo (not the app repo) | The same SVG drives the favicon, the `<Logo>` component's visual reference, and the app's `build/icon.png`. Keeping the generator (`scripts/build-icon.mjs`) in the public website repo means anyone can audit the brand mark; the app repo just consumes the generated PNG. |
 
 ---
 
@@ -270,7 +290,8 @@ inlined if site grows traffic enough to justify the bandwidth.
 - `astro.config.mjs` has `site: "https://mmdd.space"` so sitemap and
   absolute URLs resolve correctly. **Update this if the domain changes.**
 
-No `og:image` yet — should add a 1200×630 PNG once the brand asset is final.
+No `og:image` yet — should add a 1200×630 PNG. `scripts/build-icon.mjs`
+can be extended to emit one once the social preview design is settled.
 
 ---
 
@@ -312,4 +333,4 @@ Add a card to `Features.astro` and push.
 
 ---
 
-_Last updated: 2026-05-27._
+_Last updated: 2026-05-29._
