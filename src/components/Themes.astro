@@ -113,6 +113,16 @@ const themes = [
     codeBg: "#060c06",
   },
 ];
+
+// Per-card lean angles — small, varied so the row looks like books that
+// settled at slightly different tilts. Pattern repeats every 3 (one shelf).
+const leanAngles = [-7, 4, -3, 6, -5, 2, -4, 5, -6];
+
+// Group themes into rows of three (one row = one shelf).
+const shelves: (typeof themes)[] = [];
+for (let i = 0; i < themes.length; i += 3) {
+  shelves.push(themes.slice(i, i + 3));
+}
 ---
 
 <section id="themes" class="themes">
@@ -127,65 +137,172 @@ const themes = [
       </p>
     </div>
 
-    <div class="theme-grid">
-      {themes.map((t) => (
-        <article
-          class={`theme-card ${t.dark ? "is-dark" : "is-light"}`}
-          style={`--t-bg:${t.bg};--t-fg:${t.fg};--t-fg-soft:${t.fgSoft};--t-accent:${t.accent};--t-border:${t.border};--t-code:${t.codeBg};`}
-        >
-          <div class="theme-preview">
-            <div class="tp-titlebar">
-              <span class="tp-dot" style="background:#ff5f57"></span>
-              <span class="tp-dot" style="background:#febc2e"></span>
-              <span class="tp-dot" style="background:#28c840"></span>
+    <div class="theme-stage" data-theme-stage>
+      <div class="theme-shelves">
+        {shelves.map((shelfThemes, shelfIdx) => (
+          <div class="theme-shelf">
+            <div class="theme-shelf-row">
+              {shelfThemes.map((t, cardIdx) => {
+                const globalIdx = shelfIdx * 3 + cardIdx;
+                const lean = leanAngles[globalIdx] ?? 0;
+                return (
+                  <article
+                    class={`theme-card theme-card-stack ${t.dark ? "is-dark" : "is-light"}`}
+                    style={`
+                      --t-bg:${t.bg};
+                      --t-fg:${t.fg};
+                      --t-fg-soft:${t.fgSoft};
+                      --t-accent:${t.accent};
+                      --t-border:${t.border};
+                      --t-code:${t.codeBg};
+                      --lean:${lean}deg;
+                      --stagger:${globalIdx * 70}ms;
+                    `}
+                    data-card
+                  >
+                    <div class="theme-preview">
+                      <div class="tp-titlebar">
+                        <span class="tp-dot" style="background:#ff5f57"></span>
+                        <span class="tp-dot" style="background:#febc2e"></span>
+                        <span class="tp-dot" style="background:#28c840"></span>
+                      </div>
+                      <div class="tp-body">
+                        <div class="tp-h">A Few Lines</div>
+                        <div class="tp-line"></div>
+                        <div class="tp-line tp-line-short"></div>
+                        <div class="tp-quote">"a quiet line."</div>
+                        <div class="tp-code">
+                          <span class="tp-tok-k">const</span>
+                          <span class="tp-tok-i"> idea</span>
+                          <span> = "spark";</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="theme-meta">
+                      <div class="theme-name">
+                        {t.label}
+                        {t.note && <span class="theme-note">{t.note}</span>}
+                      </div>
+                      {t.pro ? (
+                        <span class="badge">Supporter</span>
+                      ) : (
+                        <span class="badge-soft">Free</span>
+                      )}
+                    </div>
+                  </article>
+                );
+              })}
             </div>
-            <div class="tp-body">
-              <div class="tp-h">A Few Lines</div>
-              <div class="tp-line"></div>
-              <div class="tp-line tp-line-short"></div>
-              <div class="tp-quote">"a quiet line."</div>
-              <div class="tp-code">
-                <span class="tp-tok-k">const</span>
-                <span class="tp-tok-i"> idea</span>
-                <span> = "spark";</span>
-              </div>
-            </div>
+            <div class="theme-shelf-board" aria-hidden="true"></div>
           </div>
-          <div class="theme-meta">
-            <div class="theme-name">
-              {t.label}
-              {t.note && <span class="theme-note">{t.note}</span>}
-            </div>
-            {t.pro ? (
-              <span class="badge">Supporter</span>
-            ) : (
-              <span class="badge-soft">Free</span>
-            )}
-          </div>
-        </article>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </section>
 
 <style>
-  .theme-grid {
+  /* ---------- Stage: the room we view the shelf from ---------- */
+
+  .theme-stage {
+    perspective: 1800px;
+    perspective-origin: 50% 25%;
+    padding: 20px 0 0;
+  }
+
+  .theme-shelves {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    transform-style: preserve-3d;
+  }
+
+  /* ---------- A single shelf (one row) ---------- */
+
+  .theme-shelf {
+    position: relative;
+    /* Slight tilt of the whole shelf — like looking down at it. */
+    transform: rotateX(6deg);
+    transform-style: preserve-3d;
+  }
+
+  .theme-shelf-row {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 18px;
+    gap: 24px;
+    align-items: end;
+    transform-style: preserve-3d;
   }
+
+  /* ---------- Wooden shelf board under each row ---------- */
+
+  .theme-shelf-board {
+    margin-top: -2px;
+    height: 8px;
+    border-radius: 2px;
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--accent) 28%, var(--border)) 0%,
+      color-mix(in srgb, var(--accent) 14%, var(--border)) 55%,
+      var(--border) 100%
+    );
+    box-shadow:
+      0 1px 0 rgba(0, 0, 0, 0.05) inset,
+      0 12px 20px -16px var(--panel-shadow);
+    transform: translateZ(-2px);
+  }
+
+  /* ---------- Each "book" / theme card ---------- */
+
+  /* Default = pre-scroll resting state: faded, sunk slightly into the shelf.
+     Single source of truth for transform — no double-declares. */
+  .theme-card-stack {
+    transform-origin: 50% 100%;
+    transform: rotateY(var(--lean, 0deg)) translateY(28px);
+    opacity: 0;
+    transition:
+      transform 0.55s cubic-bezier(0.2, 0.7, 0.3, 1)
+        var(--stagger, 0ms),
+      opacity 0.55s ease var(--stagger, 0ms),
+      box-shadow 0.3s ease;
+    will-change: transform, opacity;
+    box-shadow:
+      0 12px 22px -14px var(--panel-shadow),
+      0 2px 6px -3px rgba(0, 0, 0, 0.12);
+  }
+
+  /* Scrolled into view → books rise to the shelf and lean naturally. */
+  .theme-stage.in-view .theme-card-stack {
+    transform: rotateY(var(--lean, 0deg));
+    opacity: 1;
+  }
+
+  /* Hover (only meaningful after rise): pull the book forward. */
+  .theme-stage.in-view .theme-card-stack:hover {
+    transform: rotateY(0deg) translateZ(60px) translateY(-8px);
+    box-shadow:
+      0 28px 50px -22px var(--panel-shadow),
+      0 6px 14px -8px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+  }
+
+  /* Shelf board fades in slightly after the books. */
+  .theme-shelf-board {
+    opacity: 0;
+    transition: opacity 0.6s ease 0.15s;
+  }
+
+  .theme-stage.in-view .theme-shelf-board {
+    opacity: 1;
+  }
+
+  /* ---------- Inherited card internals (unchanged) ---------- */
 
   .theme-card {
     background: var(--panel-bg);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     overflow: hidden;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-  }
-
-  .theme-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 16px 30px -18px var(--panel-shadow);
   }
 
   .theme-preview {
@@ -288,15 +405,73 @@ const themes = [
     font-weight: 500;
   }
 
+  /* ---------- Responsive: collapse the bookshelf on small screens ---------- */
+
   @media (max-width: 920px) {
-    .theme-grid {
+    .theme-shelf {
+      transform: none;
+    }
+
+    .theme-shelf-row {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .theme-card-stack {
+      transform: none !important;
+    }
+
+    .theme-card-stack:hover {
+      transform: translateY(-3px) !important;
+    }
+
+    .theme-stage {
+      perspective: none;
+    }
+
+    .theme-shelf-board {
+      display: none;
     }
   }
 
   @media (max-width: 580px) {
-    .theme-grid {
+    .theme-shelf-row {
       grid-template-columns: 1fr;
     }
   }
+
+  /* ---------- Honor reduced motion ---------- */
+
+  @media (prefers-reduced-motion: reduce) {
+    .theme-shelf {
+      transform: none;
+    }
+    .theme-card-stack {
+      transform: none !important;
+      opacity: 1 !important;
+      transition: none;
+    }
+    .theme-shelf-board {
+      opacity: 1;
+    }
+  }
 </style>
+
+<script>
+  // Trigger the "books rise onto the shelf" animation when the section
+  // scrolls into view. Once is enough — books don't fall off the shelf.
+  const stage = document.querySelector("[data-theme-stage]");
+  if (stage) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in-view");
+            io.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold: 0.18 },
+    );
+    io.observe(stage);
+  }
+</script>
