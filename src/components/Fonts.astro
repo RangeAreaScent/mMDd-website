@@ -1,63 +1,53 @@
 ---
-// Fonts shown as a tight specimen sheet — one row per font, no cards.
-// Newsprint-paper energy: feels like an editorial type sample, not a
-// product feature spread. iA Writer Quattro isn't on Google Fonts, so
-// we approximate with Inter for that one row.
+// Fonts shown as a type specimen wall — each font announces itself by
+// rendering its own name in its own typeface. No sample sentence, no
+// tier badges. The "two free / six supporter" split lives only in the
+// section lede; individual cells stay clean.
 
 const fonts = [
   {
     id: "ia-quattro",
     label: "iA Writer Quattro",
-    pro: false,
     stack: '"iA Writer Quattro V", Inter, system-ui, sans-serif',
     note: "Default",
   },
   {
     id: "new-york",
     label: "New York",
-    pro: false,
     stack: '"New York", "Iowan Old Style", Georgia, serif',
   },
   {
     id: "merriweather",
     label: "Merriweather",
-    pro: true,
     stack: '"Merriweather", Georgia, serif',
   },
   {
     id: "noto-serif",
     label: "Noto Serif",
-    pro: true,
     stack: '"Noto Serif", Georgia, serif',
   },
   {
     id: "inter",
     label: "Inter",
-    pro: true,
     stack: '"Inter", system-ui, sans-serif',
   },
   {
     id: "jetbrains",
     label: "JetBrains Mono",
-    pro: true,
     stack: '"JetBrains Mono", ui-monospace, monospace',
   },
   {
     id: "nanum",
     label: "Nanum Gothic Coding",
-    pro: true,
     stack: '"Nanum Gothic Coding", ui-monospace, monospace',
   },
   {
     id: "vt323",
     label: "VT323",
-    pro: true,
     stack: '"VT323", "Courier New", monospace',
     note: "Pairs with Matrix",
   },
 ];
-
-const sample = "The quiet morning light fell across the page.";
 ---
 
 <section id="fonts" class="fonts">
@@ -72,19 +62,13 @@ const sample = "The quiet morning light fell across the page.";
       </p>
     </div>
 
-    <ul class="specimen-list">
+    <ul class="specimen-grid">
       {fonts.map((f) => (
-        <li class="specimen-row">
-          <div class="specimen-name">
-            <span class="sn-label">{f.label}</span>
-            {f.note && <span class="sn-note">{f.note}</span>}
-            <span class={`sn-tier ${f.pro ? "is-pro" : ""}`}>
-              {f.pro ? "Supporter" : "Free"}
-            </span>
-          </div>
-          <p class="specimen-sample" style={`font-family:${f.stack};`}>
-            {sample}
+        <li class="specimen-cell">
+          <p class="specimen-display" style={`font-family:${f.stack};`}>
+            {f.label}
           </p>
+          {f.note && <p class="specimen-note">{f.note}</p>}
         </li>
       ))}
     </ul>
@@ -96,93 +80,83 @@ const sample = "The quiet morning light fell across the page.";
     margin-bottom: 36px;
   }
 
-  /* ---------- Specimen sheet ---------- */
+  /* ---------- Specimen wall ---------- */
 
-  .specimen-list {
+  .specimen-grid {
     list-style: none;
     padding: 0;
     margin: 0;
-    border-top: 1px solid var(--hr);
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    /* 1px gap on a HR-colored background produces hairline dividers
+       between cells without writing per-cell borders. */
+    gap: 1px;
+    background: var(--hr);
+    border: 1px solid var(--hr);
+    border-radius: var(--radius);
+    overflow: hidden;
   }
 
-  .specimen-row {
-    display: grid;
-    grid-template-columns: 220px minmax(0, 1fr);
-    gap: 28px;
-    align-items: center;
-    padding: 14px 4px;
-    border-bottom: 1px solid var(--hr);
+  .specimen-cell {
+    background: var(--bg);
+    padding: 28px 22px;
+    min-height: 130px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
     transition: background-color 0.15s ease;
   }
 
-  .specimen-row:hover {
-    background: color-mix(in srgb, var(--chip-bg) 60%, transparent);
+  .specimen-cell:hover {
+    background: color-mix(in srgb, var(--chip-bg) 55%, var(--bg));
   }
 
-  .specimen-name {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    font-family: var(--ui-font);
-  }
-
-  .sn-label {
-    font-size: 12px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--fg);
-    font-weight: 600;
-  }
-
-  .sn-note {
-    font-size: 11px;
-    color: var(--accent);
-    font-weight: 500;
-  }
-
-  .sn-tier {
-    margin-top: 4px;
-    font-size: 10px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--fg-soft);
-    font-weight: 600;
-  }
-
-  .sn-tier.is-pro {
-    color: var(--accent);
-  }
-
-  .specimen-sample {
-    font-size: 22px;
-    line-height: 1.35;
+  .specimen-display {
+    /* The point of this section: the font name in its own face. Size
+       picks up the typeface's character without dominating the page. */
+    font-size: 26px;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
     color: var(--fg);
     margin: 0;
-    /* Trim long font stacks visually — the sample is what matters. */
+    /* Long names like "Nanum Gothic Coding" should wrap, not overflow. */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .specimen-note {
+    font-family: var(--ui-font);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0;
+    font-weight: 600;
   }
 
   /* ---------- Responsive ---------- */
 
-  @media (max-width: 720px) {
-    .specimen-row {
+  @media (max-width: 920px) {
+    .specimen-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .specimen-cell {
+      min-height: 120px;
+      padding: 24px 20px;
+    }
+    .specimen-display {
+      font-size: 22px;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .specimen-grid {
       grid-template-columns: 1fr;
-      gap: 8px;
-      padding: 16px 4px;
     }
-
-    .specimen-name {
-      flex-direction: row;
-      align-items: baseline;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .sn-tier {
-      margin-top: 0;
-    }
-
-    .specimen-sample {
-      font-size: 19px;
+    .specimen-cell {
+      min-height: 100px;
+      padding: 22px;
     }
   }
 </style>
