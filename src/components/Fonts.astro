@@ -1,7 +1,8 @@
 ---
-// Fonts mirror the app's font catalog. Sample text is rendered in each font.
-// iA Writer Quattro is not on Google Fonts — we approximate with Inter so the
-// site still loads cleanly. The other 8 are pulled from Google Fonts.
+// Fonts shown as a tight specimen sheet — one row per font, no cards.
+// Newsprint-paper energy: feels like an editorial type sample, not a
+// product feature spread. iA Writer Quattro isn't on Google Fonts, so
+// we approximate with Inter for that one row.
 
 const fonts = [
   {
@@ -52,103 +53,136 @@ const fonts = [
     label: "VT323",
     pro: true,
     stack: '"VT323", "Courier New", monospace',
-    note: "Paired with Matrix",
+    note: "Pairs with Matrix",
   },
 ];
 
-const sample =
-  "The quiet morning light fell across the page. Five lines in, the words found their rhythm.";
+const sample = "The quiet morning light fell across the page.";
 ---
 
 <section id="fonts" class="fonts">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head section-head-tight">
       <div class="eyebrow">Typography</div>
-      <h2>Fonts that travel<br />with the app.</h2>
+      <h2>Fonts that travel with the app.</h2>
       <p class="lede">
-        Every font ships inside mMDd, so a Mac and a Windows machine render
-        the same letterforms. Two are free, six are a thank-you for
-        supporters. Each theme remembers its own font.
+        Every font ships inside mMDd, so Mac and Windows render the same
+        letterforms. Two free, six are a thank-you for supporters. Each
+        theme remembers its own.
       </p>
     </div>
 
-    <div class="font-grid">
+    <ul class="specimen-list">
       {fonts.map((f) => (
-        <article class="font-card">
-          <div class="font-head">
-            <div class="font-label">
-              {f.label}
-              {f.note && <span class="font-note">{f.note}</span>}
-            </div>
-            {f.pro ? (
-              <span class="badge">Supporter</span>
-            ) : (
-              <span class="badge-soft">Free</span>
-            )}
+        <li class="specimen-row">
+          <div class="specimen-name">
+            <span class="sn-label">{f.label}</span>
+            {f.note && <span class="sn-note">{f.note}</span>}
+            <span class={`sn-tier ${f.pro ? "is-pro" : ""}`}>
+              {f.pro ? "Supporter" : "Free"}
+            </span>
           </div>
-          <p class="font-sample" style={`font-family:${f.stack};`}>
+          <p class="specimen-sample" style={`font-family:${f.stack};`}>
             {sample}
           </p>
-        </article>
+        </li>
       ))}
-    </div>
+    </ul>
   </div>
 </section>
 
 <style>
-  .font-grid {
+  .section-head-tight {
+    margin-bottom: 36px;
+  }
+
+  /* ---------- Specimen sheet ---------- */
+
+  .specimen-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--hr);
+  }
+
+  .specimen-row {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 28px;
+    align-items: center;
+    padding: 14px 4px;
+    border-bottom: 1px solid var(--hr);
+    transition: background-color 0.15s ease;
   }
 
-  .font-card {
-    background: var(--panel-bg);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 22px 24px;
-    transition: border-color 0.15s ease, transform 0.15s ease;
+  .specimen-row:hover {
+    background: color-mix(in srgb, var(--chip-bg) 60%, transparent);
   }
 
-  .font-card:hover {
-    transform: translateY(-2px);
-    border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
-  }
-
-  .font-head {
+  .specimen-name {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 12px;
+    flex-direction: column;
+    gap: 2px;
+    font-family: var(--ui-font);
   }
 
-  .font-label {
-    font-weight: 600;
-    font-size: 13px;
-    color: var(--fg-soft);
+  .sn-label {
+    font-size: 12px;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .font-note {
-    font-size: 10px;
-    letter-spacing: 0.06em;
-    color: var(--accent);
-    text-transform: none;
-  }
-
-  .font-sample {
-    font-size: 19px;
-    line-height: 1.5;
     color: var(--fg);
+    font-weight: 600;
   }
+
+  .sn-note {
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .sn-tier {
+    margin-top: 4px;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fg-soft);
+    font-weight: 600;
+  }
+
+  .sn-tier.is-pro {
+    color: var(--accent);
+  }
+
+  .specimen-sample {
+    font-size: 22px;
+    line-height: 1.35;
+    color: var(--fg);
+    margin: 0;
+    /* Trim long font stacks visually — the sample is what matters. */
+  }
+
+  /* ---------- Responsive ---------- */
 
   @media (max-width: 720px) {
-    .font-grid {
+    .specimen-row {
       grid-template-columns: 1fr;
+      gap: 8px;
+      padding: 16px 4px;
+    }
+
+    .specimen-name {
+      flex-direction: row;
+      align-items: baseline;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .sn-tier {
+      margin-top: 0;
+    }
+
+    .specimen-sample {
+      font-size: 19px;
     }
   }
 </style>

@@ -1,13 +1,12 @@
 ---
 // Theme palettes mirror the app's themes.css so the preview cards are
-// pixel-accurate. The "tagline" is what shows under the deck for the
-// currently surfaced card.
+// pixel-accurate. Layout is a simple Typora-style cascade — windows
+// stacked left-to-right, rightmost fully visible, the rest peek out.
 
 const themes = [
   {
     id: "mmdd",
     label: "mMDd",
-    tagline: "Crisp white, indigo accent.",
     bg: "#ffffff",
     fg: "#2c2c2e",
     fgSoft: "#6e6e73",
@@ -18,7 +17,6 @@ const themes = [
   {
     id: "mmdd-dark",
     label: "mMDd dark",
-    tagline: "Inky slate, soft indigo.",
     bg: "#1c1c22",
     fg: "#d4d4d8",
     fgSoft: "#8a8a93",
@@ -29,7 +27,6 @@ const themes = [
   {
     id: "solarized",
     label: "Solarized",
-    tagline: "Aged paper, ocean blue.",
     bg: "#fdf6e3",
     fg: "#586e75",
     fgSoft: "#93a1a1",
@@ -40,7 +37,6 @@ const themes = [
   {
     id: "night-owl",
     label: "Night Owl",
-    tagline: "Deep blue night, lime strings.",
     bg: "#011627",
     fg: "#d6deeb",
     fgSoft: "#5f7e97",
@@ -51,7 +47,6 @@ const themes = [
   {
     id: "forest",
     label: "Forest",
-    tagline: "Mossy green, soft pine.",
     bg: "#1b2420",
     fg: "#cdd6cf",
     fgSoft: "#7c8a80",
@@ -62,7 +57,6 @@ const themes = [
   {
     id: "coder",
     label: "Coder",
-    tagline: "Pure black, electric green.",
     bg: "#0c0f0d",
     fg: "#b8c2b9",
     fgSoft: "#6e7c70",
@@ -73,7 +67,6 @@ const themes = [
   {
     id: "matrix",
     label: "Matrix",
-    tagline: "Phosphor glow on black.",
     bg: "#000000",
     fg: "#6ee06e",
     fgSoft: "#2e6b2e",
@@ -84,7 +77,6 @@ const themes = [
   {
     id: "newsprint-dark",
     label: "Newsprint dark",
-    tagline: "Twilight paper, sun-faded red.",
     bg: "#1c1a17",
     fg: "#e8e3d6",
     fgSoft: "#a09b8e",
@@ -95,20 +87,15 @@ const themes = [
   {
     id: "newsprint",
     label: "Newsprint",
-    tagline: "Warm cream paper, vintage red.",
-    isDefault: true,
     bg: "#f7f7f4",
     fg: "#2b2b2b",
     fgSoft: "#6b6b6b",
     accent: "#b03a2e",
     border: "#e0e0da",
     codeBg: "#ededea",
+    isDefault: true,
   },
 ];
-// Newsprint sits at the rightmost (front) position so the default theme
-// is what's fully visible on page load. The rest cascade behind it.
-
-const defaultIdx = themes.length - 1; // Newsprint
 ---
 
 <section id="themes" class="themes">
@@ -117,23 +104,16 @@ const defaultIdx = themes.length - 1; // Newsprint
       <div class="eyebrow">Themes</div>
       <h2>Nine themes.<br />One feels like home.</h2>
       <p class="lede">
-        Hover any card to bring it forward. Newsprint is the default — its
-        warm paper and vintage red is the look mMDd ships with.
+        Four ship free with every install. Five more come as a thank-you for
+        supporters. Newsprint is the default — warm paper and vintage red.
       </p>
     </div>
 
-    <div
-      class="theme-deck-wrap"
-      data-theme-deck
-      data-default-idx={defaultIdx}
-    >
+    <div class="theme-deck-wrap" data-theme-deck>
       <div class="theme-deck">
         {themes.map((t, i) => (
-          <button
+          <article
             class="deck-card"
-            type="button"
-            data-card-idx={i}
-            aria-label={`${t.label} theme`}
             style={`
               --t-bg:${t.bg};
               --t-fg:${t.fg};
@@ -142,305 +122,244 @@ const defaultIdx = themes.length - 1; // Newsprint
               --t-border:${t.border};
               --t-code:${t.codeBg};
               --idx:${i};
-              --depth:${themes.length - 1 - i};
             `}
+            aria-label={t.label}
           >
-            <div class="card-frame">
+            <div class="card-window">
               <div class="card-titlebar">
                 <span class="td-dot" style="background:#ff5f57"></span>
                 <span class="td-dot" style="background:#febc2e"></span>
                 <span class="td-dot" style="background:#28c840"></span>
+                <span class="td-name">{t.label}{t.isDefault && " · Default"}</span>
               </div>
               <div class="card-body">
                 <div class="cd-h">A Few Lines</div>
-                <div class="cd-line"></div>
-                <div class="cd-line cd-line-short"></div>
+                <p class="cd-p">
+                  A clean room and an empty page —
+                  <em>that's all you need to begin</em>.
+                </p>
+                <p class="cd-p">
+                  Pour the coffee. <a class="cd-link">Open the file.</a>
+                </p>
                 <div class="cd-quote">"a quiet line."</div>
-                <div class="cd-code">
-                  <span class="cd-tok-k">const</span>
-                  <span class="cd-tok-i"> idea</span>
-                  <span> = "spark";</span>
-                </div>
+                <pre class="cd-code">
+<span class="cd-tok-k">const</span> idea = <span class="cd-tok-s">"spark"</span>;</pre>
               </div>
-              <div class="card-name">{t.label}</div>
             </div>
-          </button>
+          </article>
         ))}
-      </div>
-
-      <div class="deck-caption">
-        <div class="caption-name" data-caption-name>
-          {themes[defaultIdx].label}
-          {themes[defaultIdx].isDefault && (
-            <span class="caption-default">· Default</span>
-          )}
-        </div>
-        <div class="caption-tagline" data-caption-tagline>
-          {themes[defaultIdx].tagline}
-        </div>
       </div>
     </div>
   </div>
 </section>
 
 <style>
-  /* ---------- Deck layout — isometric tilt on the whole row ---------- */
+  /* ---------- Deck stage ---------- */
 
   .theme-deck-wrap {
-    /* Distant perspective = subtle foreshortening, not warped. */
-    perspective: 2400px;
-    perspective-origin: 50% 40%;
-    margin: 0 auto;
     max-width: 1100px;
-    /* Padding-bottom prevents the rotated deck from clipping. */
-    padding: 12px 0 60px;
+    margin: 0 auto;
+    /* Hide the part of the cascade that drifts past the right edge —
+       it's intentional that the front card is centered-ish and the
+       leftmost cards peek out only on the left. */
+    overflow: visible;
   }
 
   .theme-deck {
     position: relative;
-    height: 280px;
-    /* The whole row of cards is tilted like a deck of cards on a table
-       seen from the upper-left. Individual cards stay flat — the depth
-       and side angle all come from this single container transform. */
-    transform: rotateX(8deg) rotateY(-22deg);
-    transform-style: preserve-3d;
-    transform-origin: 70% 50%;
-    /* Lots of negative right margin lets the cascade overflow the
-       container; cards drift to the right with --idx. */
-    margin-right: -120px;
+    /* Tall enough for the card window + its content. */
+    height: 380px;
+    /* The cascade itself is left-aligned in the container, but the
+       rightmost (front) card lands near the right edge — which reads
+       as "this is the default, click around to compare". */
   }
+
+  /* ---------- Each card = one app window ---------- */
 
   .deck-card {
-    /* Each card is a flat tile on the tilted deck plane. The cascade
-       offset is wider now (90px) so meaningful content of each card
-       peeks out, not just the title bar. */
     position: absolute;
     top: 0;
-    left: calc(var(--idx) * 90px);
-    width: 340px;
+    left: calc(var(--idx) * 78px);
+    width: 360px;
     height: 100%;
-    padding: 0;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    /* Tiny z-step per card so each one sits a hair forward of the
-       previous — gives the cascade a "staircase" feel through the
-       container's perspective. */
-    transform: translateZ(calc(var(--idx) * 4px));
-    transition:
-      transform 0.45s cubic-bezier(0.2, 0.7, 0.3, 1),
-      filter 0.3s ease;
     z-index: var(--idx);
-    /* Cards further back are dimmed slightly — reads as atmospheric
-       depth and points the eye toward the front card. */
-    filter: brightness(calc(0.84 + var(--idx) * 0.018));
-    will-change: transform, filter;
+    /* No 3D, no rotation. Just a clean horizontal cascade. */
+    transition:
+      opacity 0.5s ease var(--enter-delay, 0ms),
+      transform 0.5s cubic-bezier(0.2, 0.7, 0.3, 1) var(--enter-delay, 0ms);
+    --enter-delay: calc(var(--idx) * 55ms);
   }
 
-  /* Hover / focus: pull this card forward and brighten it. */
-  .deck-card:hover,
-  .deck-card:focus-visible {
-    transform: translateZ(80px) translateY(-12px);
-    filter: brightness(1.02);
-    z-index: 100;
-    outline: none;
-  }
-
-  /* ---------- The card frame itself (looks like an app window) ---------- */
-
-  .card-frame {
+  .card-window {
     width: 100%;
     height: 100%;
     background: var(--t-bg);
     color: var(--t-fg);
-    border-radius: 12px;
+    border-radius: 10px;
+    border: 1px solid color-mix(in srgb, var(--t-border) 80%, transparent);
     overflow: hidden;
-    border: 1px solid color-mix(in srgb, var(--t-border) 70%, transparent);
-    box-shadow:
-      0 18px 32px -20px rgba(0, 0, 0, 0.45),
-      0 4px 10px -4px rgba(0, 0, 0, 0.18);
     display: flex;
     flex-direction: column;
-    pointer-events: none;
+    box-shadow:
+      0 22px 36px -22px rgba(0, 0, 0, 0.5),
+      0 6px 14px -6px rgba(0, 0, 0, 0.18),
+      0 1px 0 rgba(255, 255, 255, 0.05) inset;
   }
 
   .card-titlebar {
     display: flex;
-    gap: 5px;
-    padding: 11px 14px 0;
+    align-items: center;
+    gap: 6px;
+    padding: 11px 16px 9px;
+    border-bottom: 1px solid var(--t-border);
+    background: color-mix(in srgb, var(--t-bg) 92%, var(--t-fg));
+    flex-shrink: 0;
   }
 
   .td-dot {
-    width: 9px;
-    height: 9px;
+    width: 11px;
+    height: 11px;
     border-radius: 50%;
     display: inline-block;
   }
 
+  .td-name {
+    flex: 1;
+    text-align: center;
+    font-family: var(--ui-font);
+    font-size: 11px;
+    color: var(--t-fg-soft);
+    /* Pull left to compensate for the dots' width so the name sits
+       visually centered. */
+    margin-left: -35px;
+  }
+
   .card-body {
     flex: 1;
-    padding: 16px 18px 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+    padding: 22px 24px;
     font-family: var(--body-font);
+    font-size: 13px;
+    line-height: 1.55;
+    overflow: hidden;
   }
 
   .cd-h {
+    font-family: var(--body-font);
     font-weight: 700;
-    font-size: 14px;
-    color: var(--t-fg);
-    padding-bottom: 6px;
+    font-size: 17px;
+    margin: 0 0 12px;
+    padding-bottom: 8px;
     border-bottom: 1px solid var(--t-border);
+    color: var(--t-fg);
+    letter-spacing: -0.01em;
   }
 
-  .cd-line {
-    height: 6px;
-    border-radius: 3px;
-    background: var(--t-fg-soft);
-    opacity: 0.35;
+  .cd-p {
+    margin: 0 0 10px;
+    color: var(--t-fg);
   }
 
-  .cd-line-short {
-    width: 60%;
+  .cd-p em {
+    color: var(--t-fg-soft);
+    font-style: italic;
+  }
+
+  .cd-link {
+    color: var(--t-accent);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
   }
 
   .cd-quote {
-    font-style: italic;
-    font-size: 11px;
+    margin: 10px 0;
+    padding: 2px 0 2px 12px;
+    border-left: 3px solid var(--t-accent);
     color: var(--t-fg-soft);
-    border-left: 2px solid var(--t-accent);
-    padding-left: 8px;
-    line-height: 1.4;
+    font-style: italic;
+    font-size: 12px;
   }
 
   .cd-code {
     background: var(--t-code);
-    padding: 6px 8px;
-    border-radius: 4px;
+    padding: 8px 12px;
+    border-radius: 5px;
     font-family: "JetBrains Mono", ui-monospace, monospace;
-    font-size: 10.5px;
+    font-size: 11.5px;
     color: var(--t-fg);
-    margin-top: auto;
+    margin: 12px 0 0;
+    white-space: pre;
+    overflow: hidden;
   }
 
   .cd-tok-k {
     color: var(--t-accent);
   }
 
-  .cd-tok-i {
-    color: var(--t-fg);
-    opacity: 0.85;
+  .cd-tok-s {
+    color: color-mix(in srgb, var(--t-accent) 70%, var(--t-fg));
   }
 
-  /* Theme name inside the card, just under the body. Mirrors how the
-     window status bar reads in the app. */
-  .card-name {
-    padding: 8px 16px 10px;
-    font-family: var(--body-font);
-    font-size: 12px;
-    color: var(--t-fg-soft);
-    border-top: 1px solid var(--t-border);
-    background: var(--t-bg);
-  }
-
-  /* ---------- Caption under the deck ---------- */
-
-  .deck-caption {
-    margin-top: 28px;
-    text-align: center;
-    min-height: 44px;
-  }
-
-  .caption-name {
-    font-family: var(--body-font);
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--fg);
-    transition: opacity 0.2s ease;
-  }
-
-  .caption-default {
-    color: var(--accent);
-    font-weight: 600;
-    font-size: 14px;
-    margin-left: 6px;
-    letter-spacing: 0.02em;
-  }
-
-  .caption-tagline {
-    margin-top: 4px;
-    font-size: 14px;
-    color: var(--fg-soft);
-    transition: opacity 0.2s ease;
-  }
-
-  /* ---------- Scroll-in: cards fan in from the left ---------- */
+  /* ---------- Scroll-in: cards fade in left → right ---------- */
 
   .theme-deck-wrap:not(.in-view) .deck-card {
     opacity: 0;
-    transform: translateZ(calc(var(--idx) * 4px)) translateX(-40px);
-    transition-delay: calc(var(--idx) * 55ms);
+    transform: translateX(-24px);
   }
 
   .theme-deck-wrap.in-view .deck-card {
     opacity: 1;
-    transition-delay: calc(var(--idx) * 55ms);
+    transform: translateX(0);
   }
 
   /* ---------- Responsive ---------- */
 
   @media (max-width: 1100px) {
     .theme-deck {
-      transform: rotateX(8deg) rotateY(-20deg);
-      margin-right: -60px;
+      height: 340px;
     }
     .deck-card {
-      width: 300px;
-      left: calc(var(--idx) * 70px);
+      left: calc(var(--idx) * 65px);
+      width: 320px;
     }
   }
 
   @media (max-width: 880px) {
-    .theme-deck {
-      transform: rotateX(6deg) rotateY(-18deg);
-      margin-right: 0;
-    }
     .deck-card {
-      width: 260px;
-      left: calc(var(--idx) * 55px);
+      left: calc(var(--idx) * 50px);
+      width: 280px;
+    }
+    .card-body {
+      padding: 18px 20px;
+      font-size: 12.5px;
     }
   }
 
   @media (max-width: 680px) {
-    /* Below this size the cascade gets too cramped — drop to a vertical
-       scroller so the user can still browse all themes. */
+    /* Drop to a horizontal scroll snap on phones — the cascade is too
+       cramped at this size. */
     .theme-deck-wrap {
-      perspective: none;
+      margin-left: calc(-1 * var(--pad));
+      margin-right: calc(-1 * var(--pad));
+      padding-left: var(--pad);
+      padding-right: var(--pad);
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
     }
     .theme-deck {
-      height: auto;
+      height: 320px;
+      width: max-content;
       display: flex;
-      flex-direction: column;
       gap: 14px;
-      transform: none;
-      margin-right: 0;
     }
     .deck-card {
       position: relative;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 220px;
-      transform: none !important;
-      filter: none !important;
-      z-index: auto;
-    }
-    .deck-card:hover {
-      transform: translateY(-4px) !important;
-    }
-    .deck-caption {
-      display: none;
+      flex-shrink: 0;
+      width: 280px;
+      scroll-snap-align: start;
     }
   }
 
@@ -451,55 +370,16 @@ const defaultIdx = themes.length - 1; // Newsprint
     .theme-deck-wrap:not(.in-view) .deck-card {
       transition: none !important;
       opacity: 1 !important;
-    }
-    .deck-card:hover {
-      transform: translateY(-4px);
+      transform: none !important;
     }
   }
 </style>
 
 <script>
-  // Update the caption to reflect whichever card the user is currently
-  // hovering / focusing. Falls back to the default (rightmost) theme.
+  // Just trigger the fade-in cascade when the section scrolls into view.
+  // No hover, no click — the cascade is a static display.
   const wrap = document.querySelector("[data-theme-deck]");
   if (wrap) {
-    const cards = wrap.querySelectorAll(".deck-card");
-    const nameEl = wrap.querySelector("[data-caption-name]");
-    const taglineEl = wrap.querySelector("[data-caption-tagline]");
-    const defaultIdx = Number(wrap.getAttribute("data-default-idx") || 0);
-
-    // Theme data parallel to the array above — kept inline so the script
-    // doesn't need a JSON fetch. (Astro can't share JS data with inline
-    // scripts directly, so we mirror the labels/taglines here.)
-    const captions = [
-      { label: "mMDd", tagline: "Crisp white, indigo accent." },
-      { label: "mMDd dark", tagline: "Inky slate, soft indigo." },
-      { label: "Solarized", tagline: "Aged paper, ocean blue." },
-      { label: "Night Owl", tagline: "Deep blue night, lime strings." },
-      { label: "Forest", tagline: "Mossy green, soft pine." },
-      { label: "Coder", tagline: "Pure black, electric green." },
-      { label: "Matrix", tagline: "Phosphor glow on black." },
-      { label: "Newsprint dark", tagline: "Twilight paper, sun-faded red." },
-      { label: "Newsprint", tagline: "Warm cream paper, vintage red.", isDefault: true },
-    ];
-
-    function setCaption(i) {
-      const c = captions[i];
-      if (!c || !nameEl || !taglineEl) return;
-      nameEl.innerHTML =
-        c.label +
-        (c.isDefault ? ' <span class="caption-default">· Default</span>' : "");
-      taglineEl.textContent = c.tagline;
-    }
-
-    cards.forEach((card, i) => {
-      card.addEventListener("mouseenter", () => setCaption(i));
-      card.addEventListener("focus", () => setCaption(i));
-    });
-
-    wrap.addEventListener("mouseleave", () => setCaption(defaultIdx));
-
-    // Scroll-in trigger.
     const io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
