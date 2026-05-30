@@ -335,6 +335,32 @@ Vercel cache. Hard-refresh (⌘⇧R on Mac) bypasses browser cache. If Vercel
 itself is stale, trigger a redeploy from the Vercel dashboard (the latest
 commit will show with a "Redeploy" button).
 
+### `npm run dist:mac` fails late with `which python`
+
+macOS Sequoia ships `python3` only — no bare `python`. `@electron/rebuild`
+shells out to `which python` during its native-deps step and exits
+non-zero, which kills the build (often after one arch is already
+packaged, leaving an incomplete `dist/`). mMDd has no native modules,
+so the lookup is gratuitous.
+
+Fix: point the build at `python3` explicitly.
+
+```bash
+PYTHON=$(which python3) npm run dist:mac
+```
+
+Make it permanent by adding to your shell rc (`~/.zshrc` / `~/.bashrc`):
+
+```bash
+export PYTHON=/usr/bin/python3
+```
+
+Or via npm config:
+
+```bash
+npm config set python python3
+```
+
 ### `.md` files still open with the old editor after install
 
 macOS Launch Services caches every app's file-type claims. If a previous
