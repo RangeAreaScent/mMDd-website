@@ -58,7 +58,8 @@
         <h3>Tabs that stay out of the way</h3>
         <p>
           Scroll, drag to reorder, middle-click to close. Right-click for
-          Reveal in Finder, Copy Path, Close Others. <kbd>⌃Tab</kbd> to cycle.
+          Reveal, Copy Path, Duplicate. <kbd>⌃Tab</kbd> to cycle,
+          <kbd>⌘1</kbd>–<kbd>⌘9</kbd> to jump.
         </p>
       </article>
 
@@ -82,8 +83,8 @@
         </div>
         <h3>Outline sidebar</h3>
         <p>
-          Toggle with <kbd>⌘⇧O</kbd>. Walks every heading in the document
-          — click to jump. Built lazily, so it never slows you down.
+          <kbd>⌘⇧O</kbd> to toggle. Click a heading to jump — works in
+          preview, split, and editor modes. Drag the right edge to resize.
         </p>
       </article>
 
@@ -204,31 +205,41 @@
             <span class="as-status">Saved 1m ago</span>
           </div>
         </div>
-        <h3>Auto-save & atomic writes</h3>
+        <h3>Auto-save & crash recovery</h3>
         <p>
-          Opt into 30-second auto-save. Every save is atomic — a temp file
-          plus a rename, so a power cut never corrupts your draft.
+          Opt into 30-second auto-save. Atomic writes (temp + rename) so a
+          power cut never corrupts a file. Untitled drafts are persisted
+          too — a crash mid-thought doesn't lose your words.
         </p>
       </article>
 
-      <!-- 9. Front matter -->
+      <!-- 9. Duplicate, live-synced -->
       <article class="feature">
-        <div class="art art-frontmatter" aria-hidden="true">
-          <pre class="fm-block">
-<span class="fm-rule">---</span>
-<span class="fm-key">title</span>: <span class="fm-val">On Writing</span>
-<span class="fm-key">date</span>: <span class="fm-val">2026-05-27</span>
-<span class="fm-key">tags</span>: [draft, essay]
-<span class="fm-rule">---</span>
-
-<span class="fm-head"># On Writing</span>
-A clean room and an empty page.</pre>
+        <div class="art art-duplicate" aria-hidden="true">
+          <div class="dup-pane">
+            <div class="dup-tab">notes.md</div>
+            <div class="dup-body">
+              <div class="dup-line"></div>
+              <div class="dup-line dup-line-active"></div>
+              <div class="dup-line dup-line-short"></div>
+              <div class="dup-line"></div>
+            </div>
+          </div>
+          <div class="dup-pane">
+            <div class="dup-tab">notes.md</div>
+            <div class="dup-body">
+              <div class="dup-line dup-line-short"></div>
+              <div class="dup-line"></div>
+              <div class="dup-line dup-line-active"></div>
+              <div class="dup-line"></div>
+            </div>
+          </div>
         </div>
-        <h3>Front matter handled</h3>
+        <h3>Duplicate, live-synced</h3>
         <p>
-          YAML and TOML front matter is stripped before rendering. Relative
-          <kbd>.md</kbd> links open as new tabs. Images resolve from the
-          file's folder.
+          Right-click any tab → Duplicate. View the same file in two places,
+          scroll each independently. Edits and saves stay in sync — write
+          here, watch it appear there.
         </p>
       </article>
     </div>
@@ -699,39 +710,67 @@ A clean room and an empty page.</pre>
     font-size: 10px;
   }
 
-  /* ---------- Art 9: Front matter ---------- */
+  /* ---------- Art 9: Duplicate, live-synced ---------- */
 
-  .art-frontmatter {
-    padding: 14px 18px;
-    background: var(--bg);
+  .art-duplicate {
+    padding: 0;
     align-items: stretch;
-    justify-content: flex-start;
+    gap: 0;
   }
 
-  .fm-block {
-    margin: 0;
-    font-family: "JetBrains Mono", ui-monospace, monospace;
+  .dup-pane {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+    border-right: 1px solid var(--border);
+  }
+  .dup-pane:last-child {
+    border-right: none;
+  }
+
+  .dup-tab {
+    font-family: var(--ui-font);
     font-size: 10px;
-    line-height: 1.45;
     color: var(--fg);
-    overflow: hidden;
+    padding: 7px 10px 8px;
+    background: var(--bg);
+    border-top: 2px solid var(--accent);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 550;
   }
-
-  .fm-rule {
-    color: var(--fg-soft);
-  }
-
-  .fm-key {
+  .dup-tab::after {
+    content: "●";
     color: var(--accent);
+    font-size: 8px;
+    margin-left: auto;
   }
 
-  .fm-val {
-    color: var(--fg);
+  .dup-body {
+    flex: 1;
+    padding: 14px 14px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
   }
 
-  .fm-head {
-    color: var(--fg);
-    font-weight: 700;
+  .dup-line {
+    height: 5px;
+    border-radius: 2px;
+    background: var(--fg-soft);
+    opacity: 0.3;
+  }
+
+  .dup-line-short {
+    width: 62%;
+  }
+
+  .dup-line-active {
+    background: color-mix(in srgb, var(--accent) 65%, transparent);
+    opacity: 1;
   }
 
   /* ---------- Responsive ---------- */

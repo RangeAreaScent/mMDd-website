@@ -71,13 +71,19 @@ const xattrCommand = "xattr -dr com.apple.quarantine /Applications/mMDd.app";
         entirely once mMDd is signed &amp; notarized.
       </p>
 
-      <p class="install-tip">
-        <strong>Want every <kbd class="install-kbd">.md</kbd> file to open in mMDd?</strong>
-        Right-click any Markdown file → <em>Get Info</em> → under
-        <em>"Open with"</em> pick <em>mMDd</em> → click
-        <em>"Change All…"</em>. The "Open With" submenu sets a one-off
-        choice; this is the only place macOS records a real default.
-      </p>
+      <div class="install-tip-row">
+        <div class="install-tip-icon" aria-hidden="true">
+          <img src="/doc-icon-256.png" alt="" width="72" height="72" />
+          <span class="install-tip-iconlabel">readme.md</span>
+        </div>
+        <p class="install-tip">
+          <strong>Want every <kbd class="install-kbd">.md</kbd> file to open in mMDd?</strong>
+          Right-click any Markdown file → <em>Get Info</em> → under
+          <em>"Open with"</em> pick <em>mMDd</em> → click
+          <em>"Change All…"</em>. Once it's the default, your Markdown files
+          get the mMDd document icon (shown left).
+        </p>
+      </div>
 
       {MAC_RELEASES_LIVE && (
         <p class="install-arch">
@@ -238,11 +244,44 @@ const xattrCommand = "xattr -dr com.apple.quarantine /Applications/mMDd.app";
     font-style: italic;
   }
 
-  .install-tip {
+  .install-tip-row {
     margin-top: 14px;
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+  }
+  .install-tip-icon {
+    flex-shrink: 0;
+    width: 72px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin-top: 2px;
+  }
+  .install-tip-icon img {
+    display: block;
+    width: 72px;
+    height: 72px;
+    border-radius: 8px;
+  }
+  .install-tip-iconlabel {
+    font-family: var(--ui-font);
+    font-size: 10px;
+    color: var(--fg-soft);
+  }
+  .install-tip {
+    margin: 0;
     color: var(--fg-soft);
     font-size: 13.5px;
     line-height: 1.65;
+  }
+  @media (max-width: 580px) {
+    .install-tip-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
   }
 
   .install-tip strong {
