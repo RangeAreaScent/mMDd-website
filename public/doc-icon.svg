@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <!-- Slight shadow tucked under the folded flap. -->
+    <linearGradient id="fold-shadow" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="rgba(0,0,0,0.12)"/>
+      <stop offset="1" stop-color="rgba(0,0,0,0)"/>
+    </linearGradient>
+    <!-- Back-of-page tone for the folded flap — a touch darker than the
+         Newsprint bg so the fold reads. -->
+    <linearGradient id="flap" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e0e0da"/>
+      <stop offset="1" stop-color="#c9c9c1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Page shape: rounded square with top-right corner cut diagonally.
+       Flat Newsprint bg — no gradient — so it matches the app's actual
+       theme background exactly. -->
+  <path d="
+    M 0 230
+    Q 0 0 230 0
+    L 764 0
+    L 1024 260
+    L 1024 794
+    Q 1024 1024 794 1024
+    L 230 1024
+    Q 0 1024 0 794
+    Z
+  " fill="#f7f7f4" stroke="#d3d3cc" stroke-width="1"/>
+
+  <!-- Folded flap (visible because the corner is bent down). -->
+  <path d="
+    M 764 0
+    L 1024 260
+    L 764 260
+    Z
+  " fill="url(#flap)" stroke="#c9c9c1" stroke-width="1"/>
+
+  <!-- Tiny shadow at the fold crease. -->
+  <path d="
+    M 764 0
+    L 764 260
+    L 794 260
+    Z
+  " fill="url(#fold-shadow)"/>
+
+  <!-- Large MD, centered on the page — the document's main mark. -->
+  <text x="50%" y="480"
+        text-anchor="middle"
+        dominant-baseline="central"
+        font-family="'New York', 'Iowan Old Style', 'Times New Roman', Georgia, serif"
+        font-weight="700"
+        font-size="580"
+        letter-spacing="-24"
+        fill="#1a1a1a">MD</text>
+
+  <!-- mMDd watermark — vintage red, low-contrast so it doesn't compete. -->
+  <text x="50%" y="900"
+        text-anchor="middle"
+        dominant-baseline="central"
+        font-family="'New York', 'Iowan Old Style', 'Times New Roman', Georgia, serif"
+        font-weight="700"
+        font-size="60"
+        letter-spacing="-1.5"
+        fill="#b03a2e">mMDd</text>
+</svg>
