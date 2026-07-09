@@ -1,6 +1,6 @@
 # mMDd Website — Maintenance Guide
 
-Day-to-day operations for [mmdd.space](https://mmdd.space). Architecture and
+Day-to-day operations for [mmdd.doie.cc](https://mmdd.doie.cc). Architecture and
 "why" lives in [HANDOFF.md](./HANDOFF.md) — this file is "how do I do X".
 
 ---
@@ -227,7 +227,7 @@ changes needed.
 
 ## 9. Changing the domain
 
-If `mmdd.space` ever moves to another domain:
+If `mmdd.doie.cc` ever moves to another domain:
 
 1. Update `astro.config.mjs`'s `site` value
 2. Update DNS at the new registrar to point at Vercel

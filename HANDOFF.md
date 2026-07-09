@@ -1,7 +1,8 @@
 # mMDd Website — Project Handoff
 
 > Marketing + download site for **mMDd**, the Markdown editor.
-> One-page Astro static site at [mmdd.space](https://mmdd.space).
+> One-page Astro static site at [mmdd.doie.cc](https://mmdd.doie.cc)
+> (subdomain of the umbrella `doie.cc` brand).
 
 For day-to-day operations (push a new release, edit copy, troubleshoot) see
 [MAINTENANCE.md](./MAINTENANCE.md). This file is the architectural overview.
@@ -37,7 +38,8 @@ For day-to-day operations (push a new release, edit copy, troubleshoot) see
   button) is small inline `<script>` blocks in the relevant component.
 
 Hosting: **Vercel** (static deploy from `RangeAreaScent/mMDd-website` →
-`main`). DNS for `mmdd.space` points at Vercel.
+`main`). DNS for `mmdd.doie.cc` (a CNAME/A record on the `doie.cc`
+zone) points at Vercel.
 
 ---
 
@@ -287,7 +289,7 @@ inlined if site grows traffic enough to justify the bandwidth.
 - `<title>` and `<meta name="description">` defined in `Layout.astro`'s
   `Props` interface — components can override per-page if multi-page later.
 - Open Graph + Twitter card tags included.
-- `astro.config.mjs` has `site: "https://mmdd.space"` so sitemap and
+- `astro.config.mjs` has `site: "https://mmdd.doie.cc"` so sitemap and
   absolute URLs resolve correctly. **Update this if the domain changes.**
 
 No `og:image` yet — should add a 1200×630 PNG. `scripts/build-icon.mjs`
