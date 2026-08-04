@@ -1,22 +1,20 @@
 ---
-// First-time install panel — Mac only for now. Mirrors the friendly,
-// transparent tone used by PasteLight: explain the Gatekeeper block,
-// hand over the exact command, and reassure that it's scoped to mMDd.
+// First-time install panel — Mac only for now. Since v1.1.0 the build is
+// signed with the DOIE LLC Developer ID cert and notarized by Apple, so
+// Gatekeeper accepts it on first launch. Two clicks, no Terminal.
 
 import { DOWNLOAD, MAC_RELEASES_LIVE } from "../data/links.ts";
-
-const xattrCommand = "xattr -dr com.apple.quarantine /Applications/mMDd.app";
 ---
 
 <section id="install" class="install">
   <div class="container">
     <div class="install-card">
       <div class="install-head">
-        <span class="eyebrow eyebrow-tight">First-time install · 30 seconds</span>
-        <h2>Two clicks, one command,<br />and you're writing.</h2>
+        <span class="eyebrow eyebrow-tight">First-time install · 10 seconds</span>
+        <h2>Drag, drop, done.</h2>
         <p class="lede">
-          mMDd is unsigned during the free launch season, so macOS Gatekeeper
-          will block the first launch. Three steps to get through it.
+          mMDd is signed with an Apple Developer ID and notarized by Apple,
+          so macOS opens it without a Gatekeeper warning.
         </p>
       </div>
 
@@ -35,41 +33,11 @@ const xattrCommand = "xattr -dr com.apple.quarantine /Applications/mMDd.app";
           <span class="step-num" aria-hidden="true">2</span>
           <div class="step-body">
             <p>
-              Open <strong>Terminal</strong>
-              (Spotlight → type "Terminal"). Paste this line and hit Return:
-            </p>
-            <div class="codeblock" data-copy-target>
-              <code class="codeblock-text">{xattrCommand}</code>
-              <button
-                class="codeblock-copy"
-                type="button"
-                data-copy={xattrCommand}
-                aria-label="Copy command"
-              >
-                <span class="copy-default">COPY</span>
-                <span class="copy-done">COPIED</span>
-              </button>
-            </div>
-          </div>
-        </li>
-
-        <li>
-          <span class="step-num" aria-hidden="true">3</span>
-          <div class="step-body">
-            <p>
-              Double-click <strong>mMDd</strong> in Applications. Done — it
-              opens, you're in.
+              Double-click <strong>mMDd</strong> in Applications. You're in.
             </p>
           </div>
         </li>
       </ol>
-
-      <p class="install-note">
-        The command above tells macOS "I trust this file" — it removes the
-        quarantine flag Safari attached during download. It changes
-        <em>only</em> mMDd; nothing else on your Mac. The friction disappears
-        entirely once mMDd is signed &amp; notarized.
-      </p>
 
       <div class="install-tip-row">
         <div class="install-tip-icon" aria-hidden="true">
@@ -171,81 +139,10 @@ const xattrCommand = "xattr -dr com.apple.quarantine /Applications/mMDd.app";
     font-weight: 600;
   }
 
-  .codeblock {
-    margin-top: 12px;
-    background: #0e0e10;
-    color: #e7e7eb;
-    border-radius: 10px;
-    padding: 14px 18px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    font-family: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
-    font-size: 13.5px;
-    line-height: 1.5;
-    border: 1px solid #1c1c20;
-  }
-
-  :global(html[data-theme="dark"]) .codeblock {
-    background: #0a0907;
-    border-color: #1c1815;
-  }
-
-  .codeblock-text {
-    flex: 1;
-    min-width: 0;
-    word-break: break-all;
-    color: #f3f3f7;
-  }
-
-  .codeblock-copy {
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    color: #f3f3f7;
-    padding: 6px 14px;
-    border-radius: 6px;
-    font-family: var(--ui-font);
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    transition: background-color 0.15s ease;
-    flex-shrink: 0;
-    position: relative;
-  }
-
-  .codeblock-copy:hover {
-    background: rgba(255, 255, 255, 0.16);
-  }
-
-  .copy-done {
-    display: none;
-    color: #6ee06e;
-  }
-
-  .codeblock-copy[data-copied="true"] .copy-default {
-    display: none;
-  }
-
-  .codeblock-copy[data-copied="true"] .copy-done {
-    display: inline;
-  }
-
-  .install-note {
-    margin-top: 26px;
+  .install-tip-row {
+    margin-top: 28px;
     padding-top: 22px;
     border-top: 1px solid var(--hr);
-    color: var(--fg-soft);
-    font-size: 13.5px;
-    line-height: 1.65;
-  }
-
-  .install-note em {
-    color: var(--fg);
-    font-style: italic;
-  }
-
-  .install-tip-row {
-    margin-top: 14px;
     display: flex;
     gap: 18px;
     align-items: flex-start;
@@ -319,40 +216,4 @@ const xattrCommand = "xattr -dr com.apple.quarantine /Applications/mMDd.app";
   .install-arch a {
     font-weight: 500;
   }
-
-  @media (max-width: 580px) {
-    .codeblock {
-      flex-direction: column;
-      align-items: stretch;
-      gap: 10px;
-    }
-    .codeblock-copy {
-      align-self: flex-end;
-    }
-  }
 </style>
-
-<script>
-  document.querySelectorAll(".codeblock-copy").forEach((btn) => {
-    btn.addEventListener("click", async () => {
-      const text = btn.getAttribute("data-copy") || "";
-      try {
-        await navigator.clipboard.writeText(text);
-      } catch (e) {
-        // Fallback: select-and-copy via a hidden textarea.
-        const ta = document.createElement("textarea");
-        ta.value = text;
-        ta.style.position = "fixed";
-        ta.style.opacity = "0";
-        document.body.appendChild(ta);
-        ta.select();
-        try {
-          document.execCommand("copy");
-        } catch (_) {}
-        document.body.removeChild(ta);
-      }
-      btn.setAttribute("data-copied", "true");
-      setTimeout(() => btn.removeAttribute("data-copied"), 1600);
-    });
-  });
-</script>
