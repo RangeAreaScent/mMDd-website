@@ -1,5 +1,6 @@
 ---
 import Logo from "./Logo.astro";
+import { GUMROAD_URL } from "../data/links.ts";
 
 const year = new Date().getFullYear();
 ---
@@ -16,7 +17,7 @@ const year = new Date().getFullYear();
       <a href="#fonts">Fonts</a>
       <a href="#support">Support</a>
       <a href="#install">Install</a>
-      <a href="https://buymeacoffee.com/thesignalnews" target="_blank" rel="noopener noreferrer">Buy me a coffee</a>
+      <a href={GUMROAD_URL} target="_blank" rel="noopener noreferrer">Get mMDd Pro</a>
     </nav>
     <div class="footer-fine">
       <span>© {year} mMDd · Made with care.</span>

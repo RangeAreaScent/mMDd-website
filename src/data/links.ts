@@ -46,5 +46,5 @@ export const winDownloadHref = WIN_RELEASES_LIVE
 export const ANY_RELEASE_LIVE = MAC_RELEASES_LIVE || WIN_RELEASES_LIVE;
 
 // Other off-site links.
-export const BMC_URL = "https://buymeacoffee.com/thesignalnews";
+export const GUMROAD_URL = "https://doieuser.gumroad.com/l/mmdd-pro?wanted=true";
 export const WEBSITE_REPO = "https://github.com/RangeAreaScent/mMDd-website";

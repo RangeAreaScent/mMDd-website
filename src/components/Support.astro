@@ -1,5 +1,5 @@
 ---
-const BMC_URL = "https://buymeacoffee.com/thesignalnews";
+import { GUMROAD_URL } from "../data/links.ts";
 ---
 
 <section id="support" class="support">
@@ -10,15 +10,14 @@ const BMC_URL = "https://buymeacoffee.com/thesignalnews";
         <h2>mMDd is free.<br />Forever.</h2>
         <p class="lede">
           No subscription. No tracking. No upsell pop-ups.
-          If mMDd makes your writing day a little nicer and you'd like to say
-          thanks, supporters get a code that unlocks five extra themes and six
-          extra fonts — a small token of gratitude, not a paywall.
+          Get mMDd Pro and you'll get five extra themes and six extra fonts
+          — a small token of gratitude for supporting the app, not a paywall.
         </p>
 
         <div class="support-actions">
           <a
             class="btn btn-coffee"
-            href={BMC_URL}
+            href={GUMROAD_URL}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -33,24 +32,23 @@ const BMC_URL = "https://buymeacoffee.com/thesignalnews";
                 d="M18 8h1a3 3 0 0 1 0 6h-1.18A6 6 0 0 1 12 19a6 6 0 0 1-5.82-5H4V5h14v3zm0 2v2h1a1 1 0 0 0 0-2h-1zM2 21h18v2H2v-2z"
               ></path>
             </svg>
-            Buy me a coffee
+            Get mMDd Pro
           </a>
-          <a class="btn btn-ghost" href="#download">How to redeem a code →</a>
+          <a class="btn btn-ghost" href="#download">How to redeem a license key →</a>
         </div>
 
         <div class="support-steps" id="download">
-          <h3 class="steps-h">Got a thank-you code?</h3>
+          <h3 class="steps-h">Got a license key?</h3>
           <ol class="steps-list">
             <li>
               Open mMDd, click the <span class="kbd">⚙</span> gear icon next
               to the <span class="kbd">+</span>.
             </li>
             <li>
-              Scroll to <em>Unlock</em> and paste your code.
+              Scroll to <em>Unlock</em> and paste your license key.
             </li>
             <li>
-              Five Supporter themes and six Supporter fonts appear instantly.
-              That's it.
+              Five Pro themes and six Pro fonts appear instantly. That's it.
             </li>
           </ol>
         </div>
