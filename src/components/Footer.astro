@@ -23,6 +23,8 @@ const year = new Date().getFullYear();
       <span>© {year} mMDd · Made with care.</span>
       <span class="footer-sep">·</span>
       <span>No tracking. No telemetry. Just Markdown.</span>
+      <span class="footer-sep">·</span>
+      <a href="mailto:support@doie.cc">support@doie.cc</a>
     </div>
   </div>
 </footer>
@@ -79,6 +81,15 @@ const year = new Date().getFullYear();
     flex-wrap: wrap;
     justify-content: center;
     gap: 8px;
+  }
+
+  .footer-fine a {
+    color: var(--fg-soft);
+  }
+
+  .footer-fine a:hover {
+    color: var(--fg);
+    text-decoration: none;
   }
 
   .footer-sep {

@@ -1,0 +1,99 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Layout title="Privacy Policy — mMDd" description="mMDd does not collect, store, or transmit any personal data.">
+  <Nav />
+  <main class="privacy">
+    <div class="container">
+      <h1>Privacy Policy</h1>
+      <p class="updated">Last updated: August 24, 2026</p>
+
+      <p>
+        mMDd is built to work entirely on your Mac. It does not collect,
+        store, or transmit any personal data.
+      </p>
+
+      <h2>What mMDd does not do</h2>
+      <ul>
+        <li>No account or sign-in of any kind</li>
+        <li>No analytics, telemetry, or crash reporting sent anywhere</li>
+        <li>No tracking, no cookies, no fingerprinting</li>
+        <li>
+          Your documents never leave your computer. mMDd reads and writes
+          plain .md files directly to your file system.
+        </li>
+      </ul>
+
+      <h2>Payments</h2>
+      <p>If you choose to support mMDd with mMDd Pro:</p>
+      <ul>
+        <li>
+          On the Mac App Store, purchases are processed entirely by Apple
+          through StoreKit. mMDd never sees your payment details. See
+          Apple's own privacy policy for how they handle that information.
+        </li>
+        <li>
+          Outside the Mac App Store, purchases are processed by Gumroad.
+          mMDd only receives a license key to verify against Gumroad's
+          servers. It does not receive your payment or personal
+          information. See Gumroad's privacy policy for details.
+        </li>
+      </ul>
+
+      <h2>Contact</h2>
+      <p>
+        Questions about this policy can be sent to
+        <a href="mailto:support@doie.cc">support@doie.cc</a>.
+      </p>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .privacy {
+    padding: 64px 0 96px;
+  }
+
+  .privacy .container {
+    max-width: 640px;
+  }
+
+  h1 {
+    margin-bottom: 4px;
+  }
+
+  .updated {
+    color: var(--fg-soft);
+    font-size: 14px;
+    margin-bottom: 32px;
+  }
+
+  h2 {
+    margin-top: 36px;
+    margin-bottom: 12px;
+    font-size: 19px;
+  }
+
+  p,
+  li {
+    color: var(--fg-soft);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  ul {
+    padding-left: 22px;
+  }
+
+  li {
+    margin-bottom: 8px;
+  }
+
+  a {
+    color: var(--accent);
+  }
+</style>
