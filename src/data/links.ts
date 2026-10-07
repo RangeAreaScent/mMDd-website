@@ -48,3 +48,6 @@ export const ANY_RELEASE_LIVE = MAC_RELEASES_LIVE || WIN_RELEASES_LIVE;
 // Other off-site links.
 export const GUMROAD_URL = "https://doieuser.gumroad.com/l/mmdd-pro?wanted=true";
 export const WEBSITE_REPO = "https://github.com/RangeAreaScent/mMDd-website";
+
+// Mac App Store listing. Live as of 2026-09-02 (approved v1.0, build 1.1.7).
+export const MAC_APP_STORE_URL = "https://apps.apple.com/us/app/mmdd/id6803640586";

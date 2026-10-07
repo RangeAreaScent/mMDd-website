@@ -6,6 +6,7 @@ import {
   MAC_RELEASES_LIVE,
   WIN_RELEASES_LIVE,
   ANY_RELEASE_LIVE,
+  MAC_APP_STORE_URL,
 } from "../data/links.ts";
 ---
 
@@ -56,6 +57,15 @@ import {
             Download for Windows
           </a>
         )}
+        <a
+          class="app-store-badge"
+          href={MAC_APP_STORE_URL}
+          target="_blank"
+          rel="noopener"
+          aria-label="Download mMDd on the Mac App Store"
+        >
+          <img src="/mac-app-store-badge.svg" alt="Download on the App Store" />
+        </a>
       </div>
       <p class="hero-note">
         {ANY_RELEASE_LIVE ? (
@@ -168,6 +178,22 @@ const ideas = capture(thoughts)
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
+  }
+
+  .app-store-badge {
+    display: inline-flex;
+    align-items: center;
+    transition: transform 0.1s ease, opacity 0.15s ease;
+  }
+
+  .app-store-badge:hover {
+    transform: translateY(-1px);
+  }
+
+  .app-store-badge img {
+    height: 44px;
+    width: auto;
+    display: block;
   }
 
   .hero-note {
